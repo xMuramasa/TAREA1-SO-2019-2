@@ -42,12 +42,12 @@ void myMkdir(char* nombre_carpeta){
 }
 
 
-/* Void check function
+/* Void checkCreate function
 *   funcion : comprueba si se puede crear un archivo, en caso de ser asi lo crea y sino, lo avisa
 *   prints  : si se crea la carpeta y cartas correctamente, lo avisa
 *   retorna : nada
 */
-void check(char* buffer){
+void checkCreate(char* buffer){
     int cardNumber = open(buffer, O_CREAT|O_APPEND|O_RDWR);
     if(cardNumber < 0){
         printf("Error al crear archivo: %s\n", buffer);
@@ -58,6 +58,26 @@ void check(char* buffer){
     }
 
 }
+
+
+/* Void checkMove function
+*   funcion : comprueba si se movio un archivo correctamente, 
+*             cambia de carpeta en dicho caso o avisa que no puedelo avisa
+*   prints  : avisa si se mueve un archivo correctamete
+*   retorna : nada
+*/
+void checkMove(char* buffer){
+    int cardNumber = open(buffer, O_CREAT|O_APPEND|O_RDWR);
+    if(cardNumber < 0){
+        printf("Error al mover archivo: %s\n", buffer);
+    }
+    else{
+        close(cardNumber);
+        printf("Se movio el archivo: %s\n", buffer);
+    }
+
+}
+
 
 
 /* Void createDeck function
@@ -77,55 +97,109 @@ void createDeck(){
 
         strcpy(buffer,""); //crea cartas 0 
         sprintf(buffer, "Deck/%s_0.txt", cardNames[i]);
-        check(buffer);
+        checkCreate(buffer);
         
         
         strcpy(buffer,""); //crea cartas +4
         sprintf(buffer, "Deck/%s_+4_%d.txt", cardNames[4],i+1);
-        check(buffer);
+        checkCreate(buffer);
         
 
         strcpy(buffer,""); //crea cartas colores
         sprintf(buffer, "Deck/%s_CC_%d.txt", cardNames[4],i+1);
-        check(buffer);
+        checkCreate(buffer);
     
 
         for(j = 1; j < 3; j++){ //crea +2
             strcpy(buffer,"");
             sprintf(buffer, "Deck/%s_+2_%d.txt", cardNames[i],j);
-            check(buffer);
+            checkCreate(buffer);
         }
 
         for(j = 1; j < 3; j++){ //crea reverse
             strcpy(buffer,"");
             sprintf(buffer, "Deck/%s_R_%d.txt", cardNames[i],j);
-            check(buffer);
+            checkCreate(buffer);
         }
 
         for(j = 1; j < 3; j++){ //crea jump
             strcpy(buffer,"");
             sprintf(buffer, "Deck/%s_J_%d.txt", cardNames[i],j);
-            check(buffer);
+            checkCreate(buffer);
         }
         
         for(j = 1; j < 10; j++){ //crea cartas del 1 al 9 
             for ( k = 1; k < 3; k++){
                 strcpy(buffer,"");
                 sprintf(buffer, "Deck/%s_%d_%d.txt", cardNames[i], j, k);
-                check(buffer);
+                checkCreate(buffer);
             }
         }
-
-        
-        
     }   
+}
+
+
+
+/* Void listDirectory function
+*   funcion : muestra el listado de files de un directorio
+*   prints  : si se crea la carpeta y cartas correctamente, lo avisa
+*   retorna : nada
+*/
+void listDirectory(char* dName){
+    DIR *d;
+    struct dirent *dir;
+    d = opendir(dName);
+    if (d){
+        while ((dir = readdir(d)) != NULL){
+            printf("%s\n", dir->d_name);
+        }
+        closedir(d);
+    }
+}
+
+
+/* Void myRemoveFile function
+*   funcion : elimina un archivo con un directorio origen (src)
+*   prints  : avisa si puede eliminar correctamente un archivo o no
+*   retorna : nada
+*/
+void myRemoveFile(char* fileName, char* fileSrc){
+    int status;
+    chdir(fileSrc);
+    status = remove(fileName);
+    if (status == 0)
+        printf("El archivo %s ha sido eliminado correctamente.\n", fileName);
+    else{
+        printf("No se pudo eliminar el archivo %s correctamente.\n", fileName);
+    }
+    chdir("..");
+}
+
+
+/* Void moveFileToFolder function
+*   funcion : mueve un archivo de una carpeta origen a un destino
+*   retorna : nada
+*/
+void moveFileToFolder(char* fileName, char* fileSrc, char* fileDest){
+    char buffer[100] = "";
+    int copy;
+    myRemoveFile(fileName, fileSrc);
+    chdir(fileDest);
+    copy = open(fileName, O_CREAT|O_APPEND|O_RDWR);
+    checkMove(fileName);
+    chdir("..");
 }
 
 
 int main(){
 
-    createDeck();    
+    createDeck();
+    myMkdir("Drop");
 
+    //listDirectory("Deck");    
+
+    moveFileToFolder("verde_+2_1.txt", "Deck", "Drop");
+    
     return 0;
 }
 
