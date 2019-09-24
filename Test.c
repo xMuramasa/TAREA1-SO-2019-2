@@ -244,10 +244,11 @@ void test(){
 int main(){
 
 //comment
-    createTest();
+    createDeck();
+    //createTest();
     //myMkdir("Drop");
-    myMkdir("testHand");
-    test();
+    //myMkdir("testHand");
+    //test();
     //listDirectory("Deck");    
 
     //moveFileToFolder("verde_+2_1.txt", "Deck", "Drop");
