@@ -62,7 +62,7 @@ void checkCreate(char* buffer){
 
 
 /* Void checkMove function
-*   funcion : comprueba si se movio un archivo correctamente, 
+*   funcion : comprueba si se movio un archivo correctamente,
 *             cambia de carpeta en dicho caso o avisa que no puedelo avisa
 *   prints  : avisa si se mueve un archivo correctamete
 *   retorna : nada
@@ -96,20 +96,20 @@ void createDeck(){
 
     for(i = 0;i < 4;i++){ //crea cartas de cada color
 
-        strcpy(buffer,""); //crea cartas 0 
+        strcpy(buffer,""); //crea cartas 0
         sprintf(buffer, "Deck/%s_0.txt", cardNames[i]);
         checkCreate(buffer);
-        
-        
+
+
         strcpy(buffer,""); //crea cartas +4
         sprintf(buffer, "Deck/%s_+4_%d.txt", cardNames[4],i+1);
         checkCreate(buffer);
-        
+
 
         strcpy(buffer,""); //crea cartas colores
         sprintf(buffer, "Deck/%s_CC_%d.txt", cardNames[4],i+1);
         checkCreate(buffer);
-    
+
 
         for(j = 1; j < 3; j++){ //crea +2
             strcpy(buffer,"");
@@ -128,33 +128,14 @@ void createDeck(){
             sprintf(buffer, "Deck/%s_J_%d.txt", cardNames[i],j);
             checkCreate(buffer);
         }
-        
-        for(j = 1; j < 10; j++){ //crea cartas del 1 al 9 
+
+        for(j = 1; j < 10; j++){ //crea cartas del 1 al 9
             for ( k = 1; k < 3; k++){
                 strcpy(buffer,"");
                 sprintf(buffer, "Deck/%s_%d_%d.txt", cardNames[i], j, k);
                 checkCreate(buffer);
             }
         }
-    }   
-}
-
-
-
-/* Void listDirectory function
-*   funcion : muestra el listado de files de un directorio
-*   prints  : si se crea la carpeta y cartas correctamente, lo avisa
-*   retorna : nada
-*/
-void listDirectory(char* dName){
-    DIR *d;
-    struct dirent *dir;
-    d = opendir(dName);
-    if (d){
-        while ((dir = readdir(d)) != NULL){
-            printf("%s\n", dir->d_name);
-        }
-        closedir(d);
     }
 }
 
@@ -185,9 +166,8 @@ void moveFileToFolder(char* fileName, char* fileSrc, char* fileDest){
     char buffer[100] = "";
     int copy;
     myRemoveFile(fileName, fileSrc);
-    chdir(fileDest);
-    copy = open(fileName, O_CREAT|O_APPEND|O_RDWR);
-    checkMove(fileName);
+    sprintf(buffer, "%s/%s",fileDest,fileName);
+    checkMove(buffer);
     chdir("..");
 }
 
@@ -199,26 +179,47 @@ void createTest(){
 
     for(i = 0;i < 4;i++){ //crea cartas de cada color
 
-        strcpy(buffer,""); //crea cartas 0 
+        strcpy(buffer,""); //crea cartas 0
         sprintf(buffer, "Test/%s_0.txt", cardNames[i]);
         checkCreate(buffer);
+
+        strcpy(buffer,""); //crea cartas +4
+        sprintf(buffer, "Test/%s_+4_%d.txt", cardNames[4],i+1);
+        checkCreate(buffer);
+    }
+}
+
+/* Void listDirectory function
+*   funcion : muestra el listado de files de un directorio
+*   prints  : si se crea la carpeta y cartas correctamente, lo avisa
+*   retorna : nada
+*/
+void listDirectory(char* dName){
+    DIR *d;
+    struct dirent *dir;
+    d = opendir(dName);
+    if (d){
+        while ((dir = readdir(d)) != NULL){
+            printf("%s\n", dir->d_name);
+        }
+        closedir(d);
     }
 }
 
 void test(){
     srand(time(NULL));
-    int r,j; 
+    int r,j;
     char name[20];
     int i = 0;
     int temp = 4;
 
     DIR *d;
     struct dirent *dir;
-    d = opendir("Test");    
+    d = opendir("Test");
     if (d){
-        while(temp > 0){
+        while((dir = readdir(d)) != NULL){
             r = rand() % temp-i;
-            for(j = 0; j <= r; j++){
+            for(j = 0; j <= r-1; j++){
                 strcpy(name,"");
                 dir = readdir(d);
                 strcpy(name,dir->d_name);
@@ -237,21 +238,47 @@ void test(){
             d=opendir("Test");
         }
         closedir(d);
-    } 
+    }
     chdir("..");
+}
+
+void test2(){
+    srand(time(NULL));
+    int r,j;
+    char name[20];
+    int i = 0;
+    int temp = 4;
+
+    DIR *d;
+    struct dirent *dir;
+    d = opendir("Test");
+    if (d){
+        while ((dir = readdir(d)) != NULL){
+          strcpy(name,dir->d_name);
+          if(strcmp(name,".") != 0){
+              moveFileToFolder(name, "Test", "testhand");
+          }
+          else if(strcmp(name,"..") != 0){
+              moveFileToFolder(name, "Test", "testhand");
+          }
+        }
+        closedir(d);
+    }
 }
 
 int main(){
 
 //comment
     createTest();
+    //createDeck();
     //myMkdir("Drop");
     myMkdir("testHand");
-    test();
-    //listDirectory("Deck");    
+    moveFileToFolder("azul_0.txt", "Test", "testHand");
+    //test2();
+    //listDirectory("Test");
+    //listDirectory("Deck");
 
     //moveFileToFolder("verde_+2_1.txt", "Deck", "Drop");
-    
+
     return 0;
 }
-
