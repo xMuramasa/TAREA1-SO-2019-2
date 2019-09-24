@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <string.h>
+#include <time.h>
 
 //Variable con los colores de cartas
 char* cardNames[50] = {"rojo","azul","amarillo","verde","negro"};
@@ -190,15 +191,66 @@ void moveFileToFolder(char* fileName, char* fileSrc, char* fileDest){
     chdir("..");
 }
 
+void createTest(){
+    int i;
+    char buffer[100];
+    myMkdir("Test");    // creacion directorio del mazo
+    int cardNumber;
+
+    for(i = 0;i < 4;i++){ //crea cartas de cada color
+
+        strcpy(buffer,""); //crea cartas 0 
+        sprintf(buffer, "Test/%s_0.txt", cardNames[i]);
+        checkCreate(buffer);
+    }
+}
+
+void test(){
+    srand(time(NULL));
+    int r,j; 
+    char name[20];
+    int i = 0;
+    int temp = 4;
+
+    DIR *d;
+    struct dirent *dir;
+    d = opendir("Test");    
+    if (d){
+        while(temp > 0){
+            r = rand() % temp-i;
+            for(j = 0; j <= r; j++){
+                strcpy(name,"");
+                dir = readdir(d);
+                strcpy(name,dir->d_name);
+            }
+            if(strcmp(name,".") == 0){
+                j--;
+            }
+            else if(strcmp(name,"..") == 0){
+                j--;
+            }
+            else{
+                moveFileToFolder(name, "Test", "testhand");
+                i++;
+                temp--;
+            }
+            d=opendir("Test");
+        }
+        closedir(d);
+    } 
+    chdir("..");
+}
 
 int main(){
 
-    createDeck();
-    myMkdir("Drop");
 
+    createTest();
+    //myMkdir("Drop");
+    myMkdir("testHand");
+    test();
     //listDirectory("Deck");    
 
-    moveFileToFolder("verde_+2_1.txt", "Deck", "Drop");
+    //moveFileToFolder("verde_+2_1.txt", "Deck", "Drop");
     
     return 0;
 }
