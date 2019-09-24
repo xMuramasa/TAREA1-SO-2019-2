@@ -7,6 +7,7 @@
 #include <fcntl.h>
 #include <string.h>
 #include <time.h>
+#define MAXSIZE 108
 
 //Variable con los colores de cartas
 char* cardNames[50] = {"rojo","azul","amarillo","verde","negro"};
@@ -168,7 +169,6 @@ void moveFileToFolder(char* fileName, char* fileSrc, char* fileDest){
     myRemoveFile(fileName, fileSrc);
     sprintf(buffer, "%s/%s",fileDest,fileName);
     checkMove(buffer);
-    chdir("..");
 }
 
 void createTest(){
@@ -201,66 +201,107 @@ void listDirectory(char* dName){
     if (d){
         while ((dir = readdir(d)) != NULL){
             printf("%s\n", dir->d_name);
+            
         }
         closedir(d);
     }
 }
 
-void test(){
+void test(char* dName){
     srand(time(NULL));
-    int r,j;
-    char name[20];
-    int i = 0;
-    int temp = 4;
+    int r,k;
+    int i = 0; //cartas que se sacan
+    int c = 0;
 
     DIR *d;
+    char buffer[50]; 
     struct dirent *dir;
-    d = opendir("Test");
-    if (d){
-        while((dir = readdir(d)) != NULL){
-            r = rand() % temp-i;
-            for(j = 0; j <= r-1; j++){
-                strcpy(name,"");
-                dir = readdir(d);
-                strcpy(name,dir->d_name);
-            }
-            if(strcmp(name,".") == 0){
-                j--;
-            }
-            else if(strcmp(name,"..") == 0){
-                j--;
-            }
-            else{
-                moveFileToFolder(name, "Test", "testhand");
-                i++;
-                temp--;
-            }
-            d=opendir("Test");
-        }
-        closedir(d);
-    }
-    chdir("..");
-}
-
-void test2(){
-    srand(time(NULL));
-    int r,j;
-    char name[20];
-    int i = 0;
-    int temp = 4;
-
-    DIR *d;
-    struct dirent *dir;
-    d = opendir("Test");
+    d = opendir(dName);
     if (d){
         while ((dir = readdir(d)) != NULL){
-          strcpy(name,dir->d_name);
-          if(strcmp(name,".") != 0){
-              moveFileToFolder(name, "Test", "testhand");
-          }
-          else if(strcmp(name,"..") != 0){
-              moveFileToFolder(name, "Test", "testhand");
-          }
+            strcpy(buffer,"");
+            strcpy(buffer,dir->d_name);
+
+            r = rand() % (8 - c);
+
+            if(i == r){
+                printf("Se mueve %s\n",buffer);
+                i = 0;
+                c++;
+            }
+            
+            for (k = 0; k < r; k ++){
+               dir = readdir(d);
+               strcpy(buffer,"");
+               strcpy(buffer,dir->d_name);
+               if (strcmp(buffer, ".") == 0){
+                   k--;
+               }
+               else if (strcmp(buffer, ".") == 0){
+                   k--;
+               }
+            }
+            printf("%s\n",buffer);
+            i++;
+        }
+        closedir(d);
+    }
+}
+
+
+void Draw(char* dName, int r){
+    int i = 0;
+    DIR *d; 
+    char buffer[50]; 
+    struct dirent *dir;
+    d = opendir(dName);
+    if (d){
+        while ((dir = readdir(d)) != NULL && i < r){
+            if(strcmp(buffer, ".") != 0 && strcmp(buffer, "..") != 0){
+                strcpy(buffer,"");
+                strcpy(buffer,dir->d_name);
+                i++;
+
+            }
+        }
+        closedir(d);
+    }
+    moveFileToFolder(buffer,"Test","testHand");
+}
+
+void test3(char* dName){
+    DIR *d = opendir(dName);
+    char buffer[50];
+    struct dirent *dir;
+    int j,k;
+    int randPrev;
+    int i = 0;
+
+    int rNumber;
+    int flag = 0;
+
+    if(d){
+        while ((dir = readdir(d)) != NULL){
+            for (i = 0; i < rNumber; i++){
+                dir = readdir(d);
+                strcpy(buffer,"");
+                strcpy(buffer,dir->d_name);
+            }
+            if(strcmp(buffer, ".") != 0 && strcmp(buffer, "..") != 0){
+                moveFileToFolder(buffer,"Test","testHand");
+                j = 8-k;
+                while (j != 0 && flag != 0){
+                    randPrev = rNumber;
+                    rNumber = random() % j;
+                    if(rNumber > randPrev){
+                        flag = 1;
+                        break;
+                    }
+                }
+                flag = 0;
+                d = opendir(dName);
+                k++;
+            }
         }
         closedir(d);
     }
@@ -273,8 +314,7 @@ int main(){
     //createDeck();
     //myMkdir("Drop");
     myMkdir("testHand");
-    moveFileToFolder("azul_0.txt", "Test", "testHand");
-    //test2();
+    test3("Test");
     //listDirectory("Test");
     //listDirectory("Deck");
 
