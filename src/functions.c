@@ -7,7 +7,10 @@
 #include <fcntl.h>
 #include <string.h>
 #include <time.h>
+#include"../include/headerFile.h"
+
 #define MAXSIZE 108
+
 
 //Variable con los colores de cartas
 char* cardNames[50] = {"rojo","azul","amarillo","verde","negro"};

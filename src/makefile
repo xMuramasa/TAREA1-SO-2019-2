@@ -1,26 +1,18 @@
-IDIR =../include
 CC=gcc
-CFLAGS=-I$(IDIR)
+CFLAGS=-I.
+DEPS = ../include/headerFile.h
 
-ODIR=obj
-LDIR =../lib
-
-LIBS=-lm
-
-_DEPS = header.h
-DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
-
-_OBJ = main.o functions.o 
-OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
-
-
-$(ODIR)/%.o: *.c $(DEPS)
+%.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-hellomake: $(OBJ)
-	$(CC) -o $@ $^ $(CFLAGS) $(LIBS)
+obj/%.o: %.c $(DEPS)
+	$(CC) -c -o $@ $< $(CFLAGS)
 
-.PHONY: clean
+out: obj/main.o obj/functions.o 
+	$(CC) -o out obj/main.o obj/functions.o 
 
 clean:
-	rm -f $(ODIR)/*.o *~ core $(INCDIR)/*~ 
+	rm -f obj/*.o *~ core $(INCDIR)/*~ 
+
+run:
+	./out
