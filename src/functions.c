@@ -152,13 +152,13 @@ void createDeck(){
 void myRemoveFile(char* fileName, char* fileSrc){
     int status;
     chdir(fileSrc);
+    listDirectory(".");
     status = remove(fileName);
     if (status == 0)
         printf("El archivo %s ha sido eliminado correctamente.\n", fileName);
     else{
         printf("No se pudo eliminar el archivo %s correctamente.\n", fileName);
     }
-    chdir("..");
 }
 
 
@@ -260,16 +260,15 @@ void Draw(char* dName, int r){
     d = opendir(dName);
     if (d){
         while ((dir = readdir(d)) != NULL && i < r){
-            if(strcmp(buffer, ".") != 0 && strcmp(buffer, "..") != 0){
+            if(strcmp(dir->d_name, ".") != 0 && strcmp(dir->d_name, "..") != 0){
                 strcpy(buffer,"");
                 strcpy(buffer,dir->d_name);
                 i++;
-
             }
         }
         closedir(d);
     }
-    moveFileToFolder(buffer,"Test","testHand");
+    moveFileToFolder(buffer, "../outfiles/Test", "../outfiles/testHand");
 }
 
 void test3(char* dName){

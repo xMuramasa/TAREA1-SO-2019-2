@@ -7,7 +7,8 @@ int main(){
     //createDeck();
     //myMkdir("Drop");
     myMkdir("../outfiles/testHand");
-    test3("../outfiles/Test");
+    Draw("../outfiles/Test", 3);
+    //test3("../outfiles/Test");
     //listDirectory("Test");
     //listDirectory("Deck");
 
