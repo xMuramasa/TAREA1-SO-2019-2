@@ -5,7 +5,7 @@ Repositorio de la Tarea 1 de Sistemas Operativos
 Integrantes:
 	
 	- Nombre: ROL
-	- Zhuo Chang 201773XXX-X 
+	- Zhuo Chang 201773617-8 
 	- Martín Salinas Scussolin 201773557-0
 
 					(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ ✧ﾟ･: *ヽ(◕ヮ◕ヽ)
