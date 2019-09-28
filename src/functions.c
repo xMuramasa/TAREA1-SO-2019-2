@@ -152,7 +152,6 @@ void createDeck(){
 void myRemoveFile(char* fileName, char* fileSrc){
     int status;
     chdir(fileSrc);
-    listDirectory(".");
     status = remove(fileName);
     if (status == 0)
         printf("El archivo %s ha sido eliminado correctamente.\n", fileName);
@@ -170,7 +169,8 @@ void moveFileToFolder(char* fileName, char* fileSrc, char* fileDest){
     char buffer[100] = "";
     int copy;
     myRemoveFile(fileName, fileSrc);
-    sprintf(buffer, "../outfiles/%s/%s",fileDest,fileName);
+    chdir("..");
+    sprintf(buffer, "%s/%s", fileDest, fileName);
     checkMove(buffer);
 }
 
@@ -252,14 +252,20 @@ void test(char* dName){
 }
 
 
-void Draw(char* dName, int r){
+/* Void Draw function
+*   funcion : saca un archivo en la posicion randNumber y lo coloca en la carpeta especificada
+*   prints  : avisa si logra mover la carta de posicion
+*   retorna : nada
+*/
+void Draw(char *sourceDir, char *destDir, int randNumber){
     int i = 0;
     DIR *d; 
     char buffer[50]; 
     struct dirent *dir;
-    d = opendir(dName);
+    d = opendir(sourceDir);
     if (d){
-        while ((dir = readdir(d)) != NULL && i < r){
+        while ((dir = readdir(d)) != NULL && i < randNumber)
+        {
             if(strcmp(dir->d_name, ".") != 0 && strcmp(dir->d_name, "..") != 0){
                 strcpy(buffer,"");
                 strcpy(buffer,dir->d_name);
@@ -268,7 +274,7 @@ void Draw(char* dName, int r){
         }
         closedir(d);
     }
-    moveFileToFolder(buffer, "../outfiles/Test", "../outfiles/testHand");
+    moveFileToFolder(buffer, sourceDir, destDir);
 }
 
 void test3(char* dName){
@@ -290,7 +296,7 @@ void test3(char* dName){
                 strcpy(buffer,dir->d_name);
             }
             if(strcmp(buffer, ".") != 0 && strcmp(buffer, "..") != 0){
-                moveFileToFolder(buffer,"Test","testHand");
+                moveFileToFolder(buffer, "../outfiles/Test", "../outfiles/testHand");
                 j = 8-k;
                 while (j != 0 && flag != 0){
                     randPrev = rNumber;

@@ -1,18 +1,25 @@
 #include "../include/headerFile.h"
+#include <stdlib.h>
+#include <stdio.h>
 
 int main(){
 
 //comment
-    createTest();
-    //createDeck();
-    //myMkdir("Drop");
-    myMkdir("../outfiles/testHand");
-    Draw("../outfiles/Test", 3);
-    //test3("../outfiles/Test");
-    //listDirectory("Test");
-    //listDirectory("Deck");
+    //mazo real
+    createDeck();
+    puts("");
+    myMkdir("../outfiles/Drop");
+    puts("");
 
-    //moveFileToFolder("verde_+2_1.txt", "Deck", "Drop");
+    //mazo para test
+    createTest("");
+    puts("");
+
+    myMkdir("../outfiles/testHand");
+    puts("");
+
+    Draw("../outfiles/Test", "../outfiles/testHand", 3);
+    //test3("../outfiles/Test");
 
     return 0;
 }
