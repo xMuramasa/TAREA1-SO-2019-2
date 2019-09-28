@@ -1,5 +1,15 @@
 # TAREA1-SO-2019-2
 Repositorio de la Tarea 1 de Sistemas Operativos
-Integrantes: 
-      - Zhuo Chang
-      - Martin Salinas Scussolin
+
+					(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ ✧ﾟ･: *ヽ(◕ヮ◕ヽ)
+Nombre: ROL
+
+Zhuo Chang 201773XXX-X Martín Salinas Scussolin 201773557-0
+
+					(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ ✧ﾟ･: *ヽ(◕ヮ◕ヽ)
+Instrucciones de uso:
+
+* Se compila usando make, dentro de la carpeta src (escribir en la consola: make)
+  luego, ejecutar usando el comando: ./main
+
+					(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ ✧ﾟ･: *ヽ(◕ヮ◕ヽ)
