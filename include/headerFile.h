@@ -12,6 +12,7 @@ void createTest();
 void listDirectory(char *dName);
 void test(char *dName);
 void Draw(char *sourceDir, char *destDir, int randNumber);
+void DrawHand(char *sourceDir, char *destDir);
 void test3(char *dName);
 
 #endif

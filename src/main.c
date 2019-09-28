@@ -18,7 +18,8 @@ int main(){
     myMkdir("../outfiles/testHand");
     puts("");
 
-    Draw("../outfiles/Test", "../outfiles/testHand", 3);
+    //Draw("../outfiles/Test", "../outfiles/testHand", 3);
+    DrawHand("../outfiles/Deck", "../outfiles/testHand");
     //test3("../outfiles/Test");
 
     return 0;

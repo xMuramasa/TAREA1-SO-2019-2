@@ -84,7 +84,6 @@ void checkMove(char* buffer){
 }
 
 
-
 /* Void createDeck function
 *   funcion : crea el mazo de cartas
 *   prints  : si se crea la carpeta y cartas correctamente, lo avisa
@@ -174,6 +173,8 @@ void moveFileToFolder(char* fileName, char* fileSrc, char* fileDest){
     checkMove(buffer);
 }
 
+
+//igual que create deck, pero crea un directorio de prueba
 void createTest(){
     int i;
     char buffer[100];
@@ -192,6 +193,7 @@ void createTest(){
     }
 }
 
+
 /* Void listDirectory function
 *   funcion : muestra el listado de files de un directorio
 *   prints  : si se crea la carpeta y cartas correctamente, lo avisa
@@ -205,47 +207,6 @@ void listDirectory(char* dName){
         while ((dir = readdir(d)) != NULL){
             printf("%s\n", dir->d_name);
             
-        }
-        closedir(d);
-    }
-}
-
-void test(char* dName){
-    srand(time(NULL));
-    int r,k;
-    int i = 0; //cartas que se sacan
-    int c = 0;
-
-    DIR *d;
-    char buffer[50]; 
-    struct dirent *dir;
-    d = opendir(dName);
-    if (d){
-        while ((dir = readdir(d)) != NULL){
-            strcpy(buffer,"");
-            strcpy(buffer,dir->d_name);
-
-            r = rand() % (8 - c);
-
-            if(i == r){
-                printf("Se mueve %s\n",buffer);
-                i = 0;
-                c++;
-            }
-            
-            for (k = 0; k < r; k ++){
-               dir = readdir(d);
-               strcpy(buffer,"");
-               strcpy(buffer,dir->d_name);
-               if (strcmp(buffer, ".") == 0){
-                   k--;
-               }
-               else if (strcmp(buffer, ".") == 0){
-                   k--;
-               }
-            }
-            printf("%s\n",buffer);
-            i++;
         }
         closedir(d);
     }
@@ -277,6 +238,26 @@ void Draw(char *sourceDir, char *destDir, int randNumber){
     moveFileToFolder(buffer, sourceDir, destDir);
 }
 
+/* Void DrawHand function
+*   funcion : saca 7 cartas al azar y los mueve de carpeta
+*   prints  : avisa si logra mover las cartas de posicion
+*   retorna : nada
+*/
+void DrawHand(char *sourceDir, char *destDir){
+    int randomNumber = 0;
+    int moved = 0;
+    //random() % j;
+    while(moved < 7){
+
+        randomNumber = random() % (108-2);
+        if(randomNumber < 108){
+            Draw(sourceDir, destDir, randomNumber);
+            moved++;
+        }
+    }
+}
+
+//Estas funciones son un meme
 void test3(char* dName){
     DIR *d = opendir(dName);
     char buffer[50];
@@ -315,3 +296,49 @@ void test3(char* dName){
     }
 }
 
+void test(char *dName){
+    srand(time(NULL));
+    int r, k;
+    int i = 0; //cartas que se sacan
+    int c = 0;
+
+    DIR *d;
+    char buffer[50];
+    struct dirent *dir;
+    d = opendir(dName);
+    if (d)
+    {
+        while ((dir = readdir(d)) != NULL)
+        {
+            strcpy(buffer, "");
+            strcpy(buffer, dir->d_name);
+
+            r = rand() % (8 - c);
+
+            if (i == r)
+            {
+                printf("Se mueve %s\n", buffer);
+                i = 0;
+                c++;
+            }
+
+            for (k = 0; k < r; k++)
+            {
+                dir = readdir(d);
+                strcpy(buffer, "");
+                strcpy(buffer, dir->d_name);
+                if (strcmp(buffer, ".") == 0)
+                {
+                    k--;
+                }
+                else if (strcmp(buffer, ".") == 0)
+                {
+                    k--;
+                }
+            }
+            printf("%s\n", buffer);
+            i++;
+        }
+        closedir(d);
+    }
+}
