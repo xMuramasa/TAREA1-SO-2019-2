@@ -10,7 +10,9 @@ Integrantes:
 
 					(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ ✧ﾟ･: *ヽ(◕ヮ◕ヽ)
 Instrucciones de uso:
-
+	
+	** Funcionan todas las funciones que se encuentran comentadas **. 
+	* Para probar funciones, editar el archivo main.c
 	* Se compila usando make, dentro de la carpeta src (escribir en la consola: make)
   	luego, ejecutar usando el comando: make run
 
