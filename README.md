@@ -17,3 +17,8 @@ Instrucciones de uso:
   	luego, ejecutar usando el comando: make run
 
 					(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ ✧ﾟ･: *ヽ(◕ヮ◕ヽ)
+
+Lo que se hizo:
+	
+	- Zhuo Chang: funcion createDeck, moveFileToFolder, myRemoveFile, Draw, checkCreate, checkMove.
+	- Martín Salinas Scussolin: funcion myRmdir, myMkdir, createDeck, Draw, DrawHand, moveFileToFolder.
