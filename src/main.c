@@ -15,11 +15,14 @@ int main(){
     myMkdir("../outfiles/Jugador4");    //creacion del mazo del jugador 4
     puts("");
 
-    DrawHand("../outfiles/Deck", "../outfiles/Jugador1");
-    DrawHand("../outfiles/Deck", "../outfiles/Jugador2");
-    DrawHand("../outfiles/Deck", "../outfiles/Jugador3");
-    DrawHand("../outfiles/Deck", "../outfiles/Jugador4");
+    drawHand("../outfiles/Deck", "../outfiles/Jugador1");
+    //drawHand("../outfiles/Deck", "../outfiles/Jugador2");
+    //drawHand("../outfiles/Deck", "../outfiles/Jugador3");
+    //drawHand("../outfiles/Deck", "../outfiles/Jugador4");
     puts("");
+
+    printHand("../outfiles/Jugador1");
+    int hola = selection(1, 8);
 
     return 0;
 }

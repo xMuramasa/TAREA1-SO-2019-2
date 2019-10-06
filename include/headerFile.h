@@ -11,8 +11,10 @@ void moveFileToFolder(char *fileName, char *fileSrc, char *fileDest);
 void createTest();
 void listDirectory(char *dName);
 void test(char *dName);
-void Draw(char *sourceDir, char *destDir, int randNumber);
-void DrawHand(char *sourceDir, char *destDir);
+void printHand(char *dName);
+void draw(char *sourceDir, char *destDir, int randNumber);
+void drawHand(char *sourceDir, char *destDir);
 void test3(char *dName);
+int selection(int lower, int upper);
 
 #endif

@@ -23,7 +23,7 @@ int main()
     pid_t p;               // pid 
     int processCount = 0;  //cantidad de procesos
 
-    if (pipe(fd1) == -1 && pipe(fd2) == -1 && pipe(fd3) == -1 && pipe(fd4) == -1){
+    if (pipe(fd1) == -1 || pipe(fd2) == -1 || pipe(fd3) == -1 || pipe(fd4) == -1){
         fprintf(stderr, "Fallaron los pipes");
         return 1;
     }
@@ -37,14 +37,14 @@ int main()
         processCount++;
     } while (p > 0 && processCount < 3);
 
-    
+
 
     if (p < 0){
-
         fprintf(stderr, "fork Failed");
         return 1;
+    }   
     
-    }if (p > 0){ // Parent process
+    if (p > 0){ // Parent process
         printf("this da parent\n");
 
         char concat_str[100];
@@ -66,7 +66,8 @@ int main()
         printf("Concatenated string %s\n", concat_str);
         close(fd2[0]);
 
-    }else{ // child process
+    }
+    else{ // child process
         printf("this da child\n");
         close(fd1[1]); // Close writing end of first pipe
 
