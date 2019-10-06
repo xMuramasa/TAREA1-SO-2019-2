@@ -8,19 +8,18 @@ int main(){
     //mazo real
     createDeck();
     puts("");
-    myMkdir("../outfiles/Drop");
+    myMkdir("../outfiles/Drop");        //creacion del mazo de drop
+    myMkdir("../outfiles/Jugador1");    //creacion del mazo del jugador 1
+    myMkdir("../outfiles/Jugador2");    //creacion del mazo del jugador 2
+    myMkdir("../outfiles/Jugador3");    //creacion del mazo del jugador 3
+    myMkdir("../outfiles/Jugador4");    //creacion del mazo del jugador 4
     puts("");
 
-    //mazo para test
-    createTest("");
+    DrawHand("../outfiles/Deck", "../outfiles/Jugador1");
+    DrawHand("../outfiles/Deck", "../outfiles/Jugador2");
+    DrawHand("../outfiles/Deck", "../outfiles/Jugador3");
+    DrawHand("../outfiles/Deck", "../outfiles/Jugador4");
     puts("");
-
-    myMkdir("../outfiles/testHand");
-    puts("");
-
-    //Draw("../outfiles/Test", "../outfiles/testHand", 3);
-    DrawHand("../outfiles/Deck", "../outfiles/testHand");
-    //test3("../outfiles/Test");
 
     return 0;
 }
