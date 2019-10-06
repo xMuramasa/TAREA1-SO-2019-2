@@ -1,3 +1,4 @@
 outfiles/*
 !outfiles/necesaryFile.xd
 src/obj/*
+src/out
