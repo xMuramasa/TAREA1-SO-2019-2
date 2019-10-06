@@ -12,7 +12,7 @@ out: obj/main.o obj/functions.o
 	$(CC) -o out obj/main.o obj/functions.o 
 
 clean:
-	rm -f obj/*.o *~ core $(INCDIR)/*~ 
+	rm -f obj/* *~ core $(INCDIR)/*~ 
 
 run:
 	./out
