@@ -15,6 +15,7 @@
 //Variable con los colores de cartas
 char* cardNames[50] = {"rojo","azul","amarillo","verde","negro"};
 
+
 /* Void myRmdir function
 *   funcion : remueve una carpeta
 *   prints  : si se elimina la carpeta correctamente, lo avisa
@@ -195,51 +196,33 @@ void createTest(){
 }
 
 
-/* Void listDirectory function
+/* Void printHand function
 *   funcion : muestra el listado de files de un directorio
 *   prints  : si se crea la carpeta y cartas correctamente, lo avisa
 *   retorna : nada
 */
-void listDirectory(char* dName){
-    DIR *d;
-    struct dirent *dir;
-    d = opendir(dName);
-    if (d){
-        while ((dir = readdir(d)) != NULL){
-            if(dir->d_name != "." && dir->d_name != "..")
-                printf("%s\n", dir->d_name);
-            
-        }
-        closedir(d);
-    }
-}
-
-
-/* Void listDirectory function
-*   funcion : muestra el listado de files de un directorio
-*   prints  : printea un box para la eleccion de la mano del jugador
-*/
-void printHand(char *dName){
+void printHand(char *dName, int type){
     DIR *d;
     struct dirent *dir;
     d = opendir(dName);
     char (*buffer)[50] = malloc(2*sizeof(char*));
     int index = 0;
 
-    printf("************ MI MANO ************\n");
+    if (type) printf("\n************* MI MANO *************\n");
     if (d){
         while ((dir = readdir(d)) != NULL){
             if (strcmp(dir->d_name, ".") != 0 && strcmp(dir->d_name, "..") != 0){
-                    sscanf(dir->d_name, "%[^_]_%[^_]_%[^_]", buffer[0], buffer[1], buffer[2]);
-                    printf("*\t[%d] %s %s\t\t*\n", index, buffer[0], buffer[1]);
-                    index++; 
+                sscanf(dir->d_name, "%[^_]_%[^_]_%[^.txt]", buffer[0], buffer[1], buffer[2]);
+                printf("*\t[%d] %s %s %s\n", index, buffer[0], buffer[1], buffer[2]);
+                index++; 
             }
         }
         closedir(d);
     }
-    printf("*********************************\n");
+    if (type) printf("***********************************\n");
     free(buffer);
-    }
+}
+
 
 /* Void draw function
 *   funcion : saca un archivo en la posicion randNumber y lo coloca en la carpeta especificada
@@ -293,28 +276,31 @@ void drawHand(char *sourceDir, char *destDir){
 *   prints  : nada
 *   retorna : nada
 */
-void cardName(char *sourceDir, char* values, int cardNumber){
-    int i = 0;
+char** cardName(char *sourceDir, int cardNumber){
     DIR *d;
-    char buffer[50];
     struct dirent *dir;
-    d = opendir(sourceDir);
+	d = opendir(sourceDir);
+    int index = 0;
+    char(**values) = malloc(3 * sizeof(char *));
+    for (int i = 0; i < 3; i++)
+        values[i] = malloc((50) * sizeof(char));
+
     if (d){
-        while ((dir = readdir(d)) != NULL && i < cardNumber){
+        while ((dir = readdir(d)) != NULL && index < cardNumber){
             if (strcmp(dir->d_name, ".") != 0 && strcmp(dir->d_name, "..") != 0){
-                strcpy(buffer, "");
-                strcpy(buffer, dir->d_name);
-                i++;
+                sscanf(dir->d_name, "%[^_]_%[^_]_%[^.txt]", values[0], values[1], values[2]);
+                index++;
             }
         }
         closedir(d);
     }
-    sscanf(buffer, "%s_%s.txt", &values[0], &values[1]);
+    return values;
 }
 
-/* Void select function
+
+/* Void selection function
 *   funcion : hace que el usuario ingrese un input correctamente
-*   retorna : nada
+*   retorna : la seleccion
 */
 int selection(int lower, int upper){
     int selection;
@@ -335,114 +321,47 @@ int selection(int lower, int upper){
     return selection;
 }
 
+
+
+int cardInHand(char* sourceDir){
+    DIR *d;
+    struct dirent *dir;
+    d = opendir(sourceDir);
+    int hand = 0;
+    if (d){
+        while ((dir = readdir(d)) != NULL){
+			if (strcmp(dir->d_name, ".") != 0 && strcmp(dir->d_name, "..") != 0){
+				hand++; 
+            }
+        }
+        closedir(d);
+    }
+	return hand;  
+}
+
 /* Void play function
 *   funcion : juega una carta en Drop
 *   prints  : muestra la carta en juego.
 *   retorna : nada
 *
 void play(char *sourceDir, char *destDir){
-
+	int input,HandSize;
     int flag = 1;
     char (*carta)[50] = (char*)malloc(3*sizeof(char));
 
-    printf("CARTA EN JUEGO:\t"); //muestra carta en juego
-    listDiestra mano del jugador
-    printHand(destDir);
-    int input = selection(1,8);
+    printHand("../outfiles/Jugador1", 1);
+    printf("\n************** DROP **************\n");
+    printHand("../outfiles/Drop", 0);
+    printf("************** DROP **************\n");
+    int input = selection(0,8);  // selecion de carta del jugador
 
     while(flag){
-        scanf("%d",input);
+		handSize = cardIHand(sourceDir);
+        input = selection(0,handSize);
         cardName(sourceDir,carta,input);
         
-
+		break
     }
 
     free(carta);
-}
-*/
-//Estas funciones son un meme
-void test3(char* dName){
-    DIR *d = opendir(dName);
-    char buffer[50];
-    struct dirent *dir;
-    int j,k;
-    int randPrev;
-    int i = 0;
-
-    int rNumber;
-    int flag = 0;
-
-    if(d){
-        while ((dir = readdir(d)) != NULL){
-            for (i = 0; i < rNumber; i++){
-                dir = readdir(d);
-                strcpy(buffer,"");
-                strcpy(buffer,dir->d_name);
-            }
-            if(strcmp(buffer, ".") != 0 && strcmp(buffer, "..") != 0){
-                moveFileToFolder(buffer, "../outfiles/Test", "../outfiles/testHand");
-                j = 8-k;
-                while (j != 0 && flag != 0){
-                    randPrev = rNumber;
-                    rNumber = random() % j;
-                    if(rNumber > randPrev){
-                        flag = 1;
-                        break;
-                    }
-                }
-                flag = 0;
-                d = opendir(dName);
-                k++;
-            }
-        }
-        closedir(d);
-    }
-}
-
-void test(char *dName){
-    srand(time(NULL));
-    int r, k;
-    int i = 0; //cartas que se sacan
-    int c = 0;
-
-    DIR *d;
-    char buffer[50];
-    struct dirent *dir;
-    d = opendir(dName);
-    if (d)
-    {
-        while ((dir = readdir(d)) != NULL)
-        
-        {
-            strcpy(buffer, "");
-            strcpy(buffer, dir->d_name);
-
-            r = rand() % (8 - c);
-
-            if (i == r)
-            {
-                printf("Se mueve %s\n", buffer);
-                i = 0;
-                c++;
-            }
-
-            for (k = 0; k < r; k++)
-            {
-                dir = readdir(d);
-                strcpy(buffer, "");
-                strcpy(buffer, dir->d_name);
-                if (strcmp(buffer, ".") == 0)
-                {
-                    k--;
-                }
-                else if (strcmp(buffer, ".") == 0)
-                {
-                    k--;
-                }
-            }
-            printf("%s\n", buffer);
-            i++;
-        }
-        closedir(d);
-    }
-}
+}*/
