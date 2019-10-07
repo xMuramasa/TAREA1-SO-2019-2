@@ -7,8 +7,7 @@
 #include <string.h>
 #include <sys/wait.h>
 
-int main()
-{
+int main(){
     // se usan 4 pipes
     // el primero para el proceso padre
     // los que quedan para los procesos hijos
@@ -29,16 +28,30 @@ int main()
     }
 
 
-    printf("Enter a string:\t");
-    scanf("%s", input_str);
+    int fjork;
+    int fjork2;
+    int fjork3;
 
-    do{      // <---------------- creacion de forks
-        p = fork();
-        processCount++;
-    } while (p > 0 && processCount < 3);
+    int frogs[] = {-1,-1,-1,-1};
+    
+    fjork = fork();
+
+    frogs[0] = getpid();
+    frogs[1] = fjork;
+
+    if(fjork > 0){
+        fjork2 = fork();
+        frogs[2] = fjork2;
+        if(fjork2 > 0){
+        fjork3 = fork();
+        frogs[3] = fjork3;
+        }
+    }
+    printf("[");for ( i = 0; i < 3; i++)
+    
 
 
-
+/*
     if (p < 0){
         fprintf(stderr, "fork Failed");
         return 1;
@@ -93,4 +106,4 @@ int main()
 
         exit(0);
     }
-}
+*/}

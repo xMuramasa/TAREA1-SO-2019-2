@@ -20,8 +20,9 @@ int main(){
     //drawHand("../outfiles/Deck", "../outfiles/Jugador3");
     //drawHand("../outfiles/Deck", "../outfiles/Jugador4");
     puts("");
-    
-    play("../outfiles/Jugador1", "../outfiles/Drop");
+
+    int played =  play("../outfiles/Jugador1", "../outfiles/Drop");
+    printf("%d\n", played);
     
     return 0;
 }

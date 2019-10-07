@@ -181,7 +181,7 @@ void moveFileToFolder(char* fileName, char* fileSrc, char* fileDest){
 *   prints  : si se crea la carpeta y cartas correctamente, lo avisa
 *   retorna : nada
 */
-void printHand(char *dName, int type){
+int printHand(char *dName, int type){
     int index = 0;
     int i;
 
@@ -206,7 +206,10 @@ void printHand(char *dName, int type){
                 index++;
             }
         }
-        if (type) printf("***********************************\n");
+        
+        if (type){
+            printf("*\t[%d] Pasar el turno\n", index+1);
+            printf("***********************************\n");}
         closedir(d);
     }
 
@@ -214,6 +217,7 @@ void printHand(char *dName, int type){
         free(buffer[i]);
     }
     free(buffer);
+    return index+1;
 }
 
 
@@ -337,38 +341,42 @@ int cardInHand(char* sourceDir){
 *   prints  : muestra la carta en juego.
 *   retorna : nada
 */
-void play(char *sourceDir, char *destDir){
+int play(char *sourceDir, char *destDir){
 
     int randomNumber = 0;
     int input,handSize;
-    int flag = 1;
+    int WIN = 1;
     char (**cartaIn);
 	char (**cartaOut);
     char buffer1[50];
     char buffer2[50];
     int i;
+    int last, lastDrop;
 
 
-    while(flag){
-        randomNumber = random() % (108 - 2);
+    while(WIN){
         //limpieza de buffers
         strcpy(buffer1, "");
         strcpy(buffer2, "");
 
-        printHand("../outfiles/Jugador1", 1);
+        last = printHand("../outfiles/Jugador1", 1);
         printf("\nDROP ******************** DROP\n");
-        printHand("../outfiles/Drop", 0);
+        lastDrop = printHand("../outfiles/Drop", 0);
         printf("DROP ******************** DROP\n\n");
         // selecion de carta del jugador
 
         handSize = cardInHand(sourceDir);
-        input = selection(0,handSize);
+        input = selection(0,handSize+1);
 
         if (input == 0){
             printf("Se ha seleccionado robar una carta.\n");
             draw("../outfiles/Deck", sourceDir, randomNumber);
-            printHand("../outfiles/Jugador1", 1);
+            lastDrop = printHand("../outfiles/Jugador1", 1);
             //ROBAR
+        }
+        if(input == last){
+            printf("se ha seleccionado pasar\n");
+            return 0;
         }
         else{
             cartaIn = cardName(sourceDir,input-1);
@@ -396,4 +404,5 @@ void play(char *sourceDir, char *destDir){
             free(cartaOut);        
         }
     }
+    return 1;
 }
