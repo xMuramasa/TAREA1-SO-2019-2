@@ -20,12 +20,7 @@ int main(){
     //drawHand("../outfiles/Deck", "../outfiles/Jugador3");
     //drawHand("../outfiles/Deck", "../outfiles/Jugador4");
     puts("");
-    //printHand("../outfiles/Jugador1", 1);
-    //printf("\n************** DROP **************\n");
-    //printHand("../outfiles/Drop", 0);
-    //printf("************** DROP **************\n");
-
-
+    
     play("../outfiles/Jugador1", "../outfiles/Drop");
     
     return 0;

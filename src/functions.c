@@ -184,17 +184,17 @@ void moveFileToFolder(char* fileName, char* fileSrc, char* fileDest){
 void printHand(char *dName, int type){
     int index = 0;
     int i;
-    
+
     DIR *d;
     struct dirent *dir;
     d = opendir(dName);
-    
+
     char (**buffer) = malloc(3*sizeof(char*));
     for (i = 0; i < 3; i++){
         buffer[i] = malloc(50 * sizeof(char *));
     }
 
-    if (type){ 
+    if (type){
         printf("\n************* MI MANO *************\n");
         printf("*\t[0] Robar una carta\n");
     }
@@ -203,14 +203,14 @@ void printHand(char *dName, int type){
             if (strcmp(dir->d_name, ".") != 0 && strcmp(dir->d_name, "..") != 0){
                 sscanf(dir->d_name, "%[^_]_%[^_]_%[^.txt]", buffer[0], buffer[1], buffer[2]);
                 printf("*\t[%d] %s %s %s\n", index+1, buffer[0], buffer[1], buffer[2]);
-                index++; 
+                index++;
             }
         }
         if (type) printf("***********************************\n");
         closedir(d);
     }
 
-    for (int i = 0; i < 3; i++){
+    for (i = 0; i < 3; i++){
         free(buffer[i]);
     }
     free(buffer);
@@ -224,17 +224,14 @@ void printHand(char *dName, int type){
 */
 void draw(char *sourceDir, char *destDir, int randNumber){
     int i = 0;
-    DIR *d; 
-    char buffer[50]; 
+    DIR *d;
+    char buffer[50];
     struct dirent *dir;
     d = opendir(sourceDir);
     if (d){
-        while ((dir = readdir(d)) != NULL && i < randNumber)
-        {
+        while ((dir = readdir(d)) != NULL && i < (randNumber)){
             if(strcmp(dir->d_name, ".") != 0 && strcmp(dir->d_name, "..") != 0){
-                strcpy(buffer,"");
                 strcpy(buffer,dir->d_name);
-                //printf("%s\n",buffer);
                 i++;
             }
         }
@@ -327,12 +324,12 @@ int cardInHand(char* sourceDir){
     if (d){
         while ((dir = readdir(d)) != NULL){
 			if (strcmp(dir->d_name, ".") != 0 && strcmp(dir->d_name, "..") != 0){
-				hand++; 
+				hand++;
             }
         }
         closedir(d);
     }
-	return hand;  
+	return hand;
 }
 
 /* Void play function
@@ -341,55 +338,62 @@ int cardInHand(char* sourceDir){
 *   retorna : nada
 */
 void play(char *sourceDir, char *destDir){
-	int input,handSize;
+
+    int randomNumber = 0;
+    int input,handSize;
     int flag = 1;
     char (**cartaIn);
 	char (**cartaOut);
     char buffer1[50];
     char buffer2[50];
+    int i;
 
 
     while(flag){
+        randomNumber = random() % (108 - 2);
         //limpieza de buffers
         strcpy(buffer1, "");
         strcpy(buffer2, "");
-        
+
         printHand("../outfiles/Jugador1", 1);
         printf("\nDROP ******************** DROP\n");
         printHand("../outfiles/Drop", 0);
         printf("DROP ******************** DROP\n\n");
         // selecion de carta del jugador
-        
+
         handSize = cardInHand(sourceDir);
         input = selection(0,handSize);
+
         if (input == 0){
             printf("Se ha seleccionado robar una carta.\n");
+            draw("../outfiles/Deck", sourceDir, randomNumber);
+            printHand("../outfiles/Jugador1", 1);
             //ROBAR
-            break;
         }
-        cartaIn = cardName(sourceDir,input);
-        cartaOut = cardName(destDir, input);    
+        else{
+            cartaIn = cardName(sourceDir,input-1);
+            cartaOut = cardName(destDir, input-1);
 
-        // carta[0] = color, carta[1]=tipo, carta[3]=copia
-        //sprintf(var1+var2,format, var1, var1);
-		
-        sprintf(buffer1, "%s_%s_%s.txt",cartaIn[0], cartaIn[1], cartaIn[2]);
-		sprintf(buffer2, "%s_%s_%s.txt",cartaOut[0], cartaOut[1], cartaOut[2]);
+            // carta[0] = color, carta[1]=tipo, carta[3]=copia
+            //sprintf(var1+var2,format, var1, var1);
 
-        myRemoveFile(buffer2, destDir);
-        moveFileToFolder(buffer1, sourceDir, destDir);
+            sprintf(buffer1, "%s_%s_%s.txt",cartaIn[0], cartaIn[1], cartaIn[2]);
+    		sprintf(buffer2, "%s_%s_%s.txt",cartaOut[0], cartaOut[1], cartaOut[2]);
 
-        /* 
-        if (strcmp(cartaIn[0], cartaOut[0]) == 0 || strcmp(cartaIn[1], cartaOut[1]) == 0){
-            myRemoveFile(buffer2,destDir);
-			moveFileToFolder(buffer1,sourceDir,destDir);
-        }*/
-        for (int i = 0; i < 3; i++){
-            free(cartaIn[i]);
-            free(cartaOut[i]);
+            myRemoveFile(buffer2, destDir);
+            moveFileToFolder(buffer1, sourceDir, destDir);
+
+            /*
+            if (strcmp(cartaIn[0], cartaOut[0]) == 0 || strcmp(cartaIn[1], cartaOut[1]) == 0){
+                myRemoveFile(buffer2,destDir);
+    			moveFileToFolder(buffer1,sourceDir,destDir);
+            }*/
+            for (i = 0; i < 3; i++){
+                free(cartaIn[i]);
+                free(cartaOut[i]);
+            }
+            free(cartaIn);
+            free(cartaOut);        
         }
-        free(cartaIn);
-        free(cartaOut);
     }
-
 }
