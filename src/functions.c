@@ -194,7 +194,10 @@ void printHand(char *dName, int type){
         buffer[i] = malloc(50 * sizeof(char *));
     }
 
-    if (type) printf("\n************* MI MANO *************\n");
+    if (type){ 
+        printf("\n************* MI MANO *************\n");
+        printf("*\t[0] Robar una carta\n");
+    }
     if (d){
         while ((dir = readdir(d)) != NULL){
             if (strcmp(dir->d_name, ".") != 0 && strcmp(dir->d_name, "..") != 0){
@@ -272,26 +275,21 @@ char** cardName(char *sourceDir, int cardNumber){
 	d = opendir(sourceDir);
     int i ;
     int index = 0;
-    puts("malloc");
     char(**values) = malloc(3 * sizeof(char *));
+
     for (i = 0; i < 3; i++){
-        puts("formalloc");
         values[i] = malloc(50 * sizeof(char*));
     }
-    puts("aftermalloc");
 
     if (d){
         while ((dir = readdir(d)) != NULL && index <= cardNumber){
-            puts("while");
             if (strcmp(dir->d_name, ".") != 0 && strcmp(dir->d_name, "..") != 0){
                 sscanf(dir->d_name, "%[^_]_%[^_]_%[^.txt]", values[0], values[1], values[2]);
-                puts("scanf");
                 index++;
             }
         }
         closedir(d);
     }
-    puts("outwhile");
     return values;
 }
 
@@ -352,34 +350,31 @@ void play(char *sourceDir, char *destDir){
 
 
     while(flag){
+        //limpieza de buffers
+        strcpy(buffer1, "");
+        strcpy(buffer2, "");
         
         printHand("../outfiles/Jugador1", 1);
         printf("\nDROP ******************** DROP\n");
         printHand("../outfiles/Drop", 0);
         printf("DROP ******************** DROP\n\n");
-        //input = selection(0,8);  // selecion de carta del jugador
-        
-        strcpy(buffer1, "");
-        strcpy(buffer2, "");
+        // selecion de carta del jugador
         
         handSize = cardInHand(sourceDir);
         input = selection(0,handSize);
-        printf("xd\n");
+        if (input == 0){
+            printf("Se ha seleccionado robar una carta.\n");
+            //ROBAR
+            break;
+        }
         cartaIn = cardName(sourceDir,input);
-        printf("xdaa\n");
-        cartaOut = cardName(destDir, input);
-        printf("xds\n");
+        cartaOut = cardName(destDir, input);    
 
         // carta[0] = color, carta[1]=tipo, carta[3]=copia
         //sprintf(var1+var2,format, var1, var1);
 		
         sprintf(buffer1, "%s_%s_%s.txt",cartaIn[0], cartaIn[1], cartaIn[2]);
-		printf("%s\n",buffer1);
 		sprintf(buffer2, "%s_%s_%s.txt",cartaOut[0], cartaOut[1], cartaOut[2]);
-		printf("%s\n",buffer2);
-        
-        printf("REMOVE %s %s \n",buffer1,destDir);
-        printf("MOVE %s %s %s \n",buffer2,sourceDir,destDir);
 
         myRemoveFile(buffer2, destDir);
         moveFileToFolder(buffer1, sourceDir, destDir);
