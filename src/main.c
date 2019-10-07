@@ -20,22 +20,13 @@ int main(){
     //drawHand("../outfiles/Deck", "../outfiles/Jugador3");
     //drawHand("../outfiles/Deck", "../outfiles/Jugador4");
     puts("");
-    moveFileToFolder("amarillo_+2_1.txt", "../outfiles/Deck", "../outfiles/Drop");
     //printHand("../outfiles/Jugador1", 1);
     //printf("\n************** DROP **************\n");
     //printHand("../outfiles/Drop", 0);
     //printf("************** DROP **************\n");
 
-    char(**carta) = cardName("../outfiles/Drop", 1);
-    printf("lul\n");
-    printf("%s %s %s   \n", carta[0], carta[1], carta[2]);
-    for (int i = 0; i < 3; i++)
-    {
-        free(carta[i]);
-    }
+
+    play("../outfiles/Jugador1", "../outfiles/Drop");
     
-    free(carta);
-
-
     return 0;
 }

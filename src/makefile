@@ -15,4 +15,4 @@ clean:
 	rm -f obj/* *~ core $(INCDIR)/*~ 
 
 run:
-	./out
+	 ./out
