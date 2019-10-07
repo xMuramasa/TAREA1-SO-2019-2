@@ -206,7 +206,7 @@ int printHand(char *dName, int type){
                 index++;
             }
         }
-        
+
         if (type){
             printf("*\t[%d] Pasar el turno\n", index+1);
             printf("***********************************\n");}
@@ -336,73 +336,83 @@ int cardInHand(char* sourceDir){
 	return hand;
 }
 
-/* Void play function
-*   funcion : juega una carta en Drop
+/* int play function
+*   funcion : jhace la accion de un turno
 *   prints  : muestra la carta en juego.
-*   retorna : nada
+*   retorna : entero que avisa si juega o no
 */
-int play(char *sourceDir, char *destDir){
+///string
+char* play(char *sourceDir, char *destDir){
 
-    int randomNumber = 0;
-    int input,handSize;
-    int WIN = 1;
+    //numero random para robar una carta
+    int totalCards = cardInHand("../outfiles/Deck/");
+    int randomNumber = random() % (108 - totalCards);
+    while (randomNumber == 0){
+        randomNumber = random() % (108 - totalCards);
+    }
+
+    char* y = "y";
+    char* n = "n";
+
+    // variables de input, tamaño de la mano, print cartas de mano jugador, print cartas drop
+    int input, handSize, last, lastDrop, i;
+
+    // arreglos de carta actual en seleccion y drop
     char (**cartaIn);
 	char (**cartaOut);
+
+    //buffers de nombres y accion
     char buffer1[50];
     char buffer2[50];
-    int i;
-    int last, lastDrop;
+    char action[50];
 
+    //limpieza de buffers
+    strcpy(buffer1, "");
+    strcpy(buffer2, "");
 
-    while(WIN){
-        //limpieza de buffers
-        strcpy(buffer1, "");
-        strcpy(buffer2, "");
+    //cartas player
+    last = printHand(sourceDir, 1);
+    //carta drop
+    printf("\nDROP ******************** DROP\n");
+    lastDrop = printHand("../outfiles/Drop", 0);
+    printf("DROP ******************** DROP\n\n");
 
-        last = printHand("../outfiles/Jugador1", 1);
-        printf("\nDROP ******************** DROP\n");
-        lastDrop = printHand("../outfiles/Drop", 0);
-        printf("DROP ******************** DROP\n\n");
-        // selecion de carta del jugador
+    // selecion de carta del jugador
+    handSize = cardInHand(sourceDir);
+    input = selection(0,handSize+1);
 
-        handSize = cardInHand(sourceDir);
-        input = selection(0,handSize+1);
+    if (input == 0){
 
-        if (input == 0){
-            printf("Se ha seleccionado robar una carta.\n");
-            draw("../outfiles/Deck", sourceDir, randomNumber);
-            lastDrop = printHand("../outfiles/Jugador1", 1);
-            //ROBAR
-        }
-        if(input == last){
-            printf("se ha seleccionado pasar\n");
-            return 0;
-        }
-        else{
-            cartaIn = cardName(sourceDir,input-1);
-            cartaOut = cardName(destDir, input-1);
-
-            // carta[0] = color, carta[1]=tipo, carta[3]=copia
-            //sprintf(var1+var2,format, var1, var1);
-
-            sprintf(buffer1, "%s_%s_%s.txt",cartaIn[0], cartaIn[1], cartaIn[2]);
-    		sprintf(buffer2, "%s_%s_%s.txt",cartaOut[0], cartaOut[1], cartaOut[2]);
-
-            myRemoveFile(buffer2, destDir);
-            moveFileToFolder(buffer1, sourceDir, destDir);
-
-            /*
-            if (strcmp(cartaIn[0], cartaOut[0]) == 0 || strcmp(cartaIn[1], cartaOut[1]) == 0){
-                myRemoveFile(buffer2,destDir);
-    			moveFileToFolder(buffer1,sourceDir,destDir);
-            }*/
-            for (i = 0; i < 3; i++){
-                free(cartaIn[i]);
-                free(cartaOut[i]);
-            }
-            free(cartaIn);
-            free(cartaOut);        
-        }
+        printf("Se ha seleccionado robar una carta.\n");
+        draw("../outfiles/Deck", sourceDir, randomNumber);
+        lastDrop = printHand(sourceDir, 1);
+        //ROBAR
     }
-    return 1;
+    else if(input == last){
+        printf("se ha seleccionado pasar\n");
+        return n;
+    }
+    else{
+        //cartas seleccion y drop
+        cartaIn = cardName(sourceDir,input-1);
+        cartaOut = cardName(destDir, input-1);//
+
+        //nombre de cartas
+        sprintf(buffer1, "%s_%s_%s.txt",cartaIn[0], cartaIn[1], cartaIn[2]);
+        sprintf(buffer2, "%s_%s_%s.txt",cartaOut[0], cartaOut[1], cartaOut[2]);
+
+        //cambio de lugar carta seleccionada
+        myRemoveFile(buffer2, destDir);
+        moveFileToFolder(buffer1, sourceDir, destDir);
+
+        //memoria
+        for (i = 0; i < 3; i++){
+            free(cartaIn[i]);
+            free(cartaOut[i]);
+        }
+        free(cartaIn);
+        free(cartaOut);
+    }
+
+    return y;
 }

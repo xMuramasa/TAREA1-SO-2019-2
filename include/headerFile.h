@@ -16,6 +16,6 @@ void drawHand(char *sourceDir, char *destDir);
 void test3(char *dName);
 int selection(int lower, int upper);
 char** cardName(char *sourceDir, int cardNumber);
-int play(char *sourceDir, char *destDir);
+char* play(char *sourceDir, char *destDir);
 
 #endif
