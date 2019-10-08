@@ -12,7 +12,7 @@
 # Instrucciones de uso:
 	
 	** para correr el programa en una linea (make && make run)
-   ## Entrega 1:
+   #### Entrega 1:
 		** Funcionan todas las funciones que se encuentran comentadas **. 
 		* Para probar funciones, editar el archivo main.c
 		* Se compila usando make, dentro de la carpeta src (escribir en la consola: make)
@@ -20,7 +20,7 @@
 					
 					(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ ✧ﾟ･: *ヽ(◕ヮ◕ヽ)
 					
-   ## Entrega 2:
+   #### Entrega 2:
 		** Funciona todo lo que se encuentra comentado **
 		* main.c contiene todo el trabajo de esta entrega, se hicieron las funciones: 
 			play, printHand y se updatearon otras. 
@@ -32,7 +32,7 @@
 
 			(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ ✧ﾟ･: *ヽ(◕ヮ◕ヽ)(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ ✧ﾟ･: *ヽ(◕ヮ◕ヽ)
 
-## Lo que se hizo (entrega 1):
+# Responsabilidades de lo que se hizo (entrega 1):
 	
 	- Zhuo Chang: funcion createDeck, moveFileToFolder, myRemoveFile, Draw, checkCreate, checkMove.
 	- Martín Salinas Scussolin: funcion myRmdir, myMkdir, createDeck, Draw, DrawHand, moveFileToFolder.
