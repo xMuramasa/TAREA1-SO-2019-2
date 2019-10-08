@@ -36,3 +36,8 @@
 	
 	- Zhuo Chang: funcion createDeck, moveFileToFolder, myRemoveFile, Draw, checkCreate, checkMove.
 	- Martín Salinas Scussolin: funcion myRmdir, myMkdir, createDeck, Draw, DrawHand, moveFileToFolder.
+
+# Responsabilidades de lo que se hizo (entrega 2):
+		
+	- Zhuo Chang: Creacion y revision de forks y pipes. Funcion play.
+	- Martín Salinas Scussolin: Revision de forks y pipes. Funcion play. Funcion printHand
