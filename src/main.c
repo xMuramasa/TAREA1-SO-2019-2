@@ -7,7 +7,7 @@
 #include <string.h>
 #include <sys/wait.h>
 #include "../include/headerFile.h"
-
+//cambio
 int main()
 {
     // se usan 4 pipes
