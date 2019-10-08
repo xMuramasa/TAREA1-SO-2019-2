@@ -9,10 +9,10 @@
 	- Martín Salinas Scussolin 201773557-0
 
 			(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ ✧ﾟ･: *ヽ(◕ヮ◕ヽ)(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ ✧ﾟ･: *ヽ(◕ヮ◕ヽ)
-## Instrucciones de uso:
+# Instrucciones de uso:
 	
 	** para correr el programa en una linea (make && make run)
-   # Entrega 1:
+   ## Entrega 1:
 		** Funcionan todas las funciones que se encuentran comentadas **. 
 		* Para probar funciones, editar el archivo main.c
 		* Se compila usando make, dentro de la carpeta src (escribir en la consola: make)
@@ -20,7 +20,7 @@
 					
 					(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ ✧ﾟ･: *ヽ(◕ヮ◕ヽ)
 					
-   # Entrega 2:
+   ## Entrega 2:
 		** Funciona todo lo que se encuentra comentado **
 		* main.c contiene todo el trabajo de esta entrega, se hicieron las funciones: 
 			play, printHand y se updatearon otras. 
