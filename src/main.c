@@ -6,6 +6,7 @@
 #include <sys/types.h>
 #include <string.h>
 #include <sys/wait.h>
+#include <time.h>
 #include "../include/headerFile.h"
 //cambio
 int main()
@@ -22,6 +23,7 @@ int main()
     int fd30[2]; // msg de h3 a padre
     int i, hijo1, hijo2, hijo3;
     int win = 1;
+    int randomNumber = 0;
 
     char recibo[2];
     char entrego[2];
@@ -34,6 +36,8 @@ int main()
         fprintf(stderr, "Fallaron los pipes");
         return 1;
     }
+
+
 
     //comment
     //mazo real
@@ -51,6 +55,9 @@ int main()
     drawHand("../outfiles/Deck", "../outfiles/Jugador3");
     drawHand("../outfiles/Deck", "../outfiles/Jugador4");
     puts("");
+
+    randomNumber = random() % (108-2);
+    draw("../outfiles/Deck", "../outfiles/Drop",randomNumber);
 
     int fam[4];
     fam[0] = getpid();
@@ -92,42 +99,49 @@ int main()
     { //escribir vn fd01 y leer cn fd30
         while (win)
         {
-            printf("proceso padre\n");
+            printf("\nPROCESO PADRE\n");
             strcpy(recibo, "");
             strcpy(entrego, "");
 
             //interaccion hijo 1
-            close(fd01[0]); // close read fd01
-            strcpy(entrego, play("../outfiles/Jugador1", "../outfiles/Drop"));
-            write(fd01[1], entrego, 20);
+            if (strcmp(recibo,"j") != 0){
+                close(fd01[0]); // close read fd01
+                strcpy(entrego, play("../outfiles/Jugador1", "../outfiles/Drop"));
+                write(fd01[1], entrego, 20);
 
-            if(strcmp(entrego,"J") != 0){
                 close(fd10[1]); //close write fd10
                 while (read(fd10[0], recibo, 20) < 0)
                 {
                 }
-
+            }
+            else{
+                strcpy(recibo,"a");
             }
 
             //interaccion hijo 2
-            strcpy(entrego, recibo);
-            close(fd02[0]); // close read fd02
-            write(fd02[1], entrego, 20);
-
-            close(fd20[1]); //close write fd20
-            while (read(fd20[0], recibo, 20) < 0)
-            {
+            if (strcmp(recibo,"j") != 0){
+                strcpy(entrego, recibo);
+                close(fd02[0]); // close read fd02
+                write(fd02[1], entrego, 20);
+                close(fd20[1]); //close write fd20
+                while (read(fd20[0], recibo, 20) < 0)
+                {
+                }
+            }
+            else{
+                strcpy(recibo,"a");
             }
 
+
             //interaccion hijo 3
-            strcpy(entrego, recibo);
+            /*strcpy(entrego, recibo);
             close(fd03[0]); // close read fd03
             write(fd03[1], entrego, 20);
 
             close(fd30[1]); //close write fd30
             while (read(fd30[0], recibo, 20) < 0)
             {
-            }
+            }*/
         }
     }
     //proceso hijo 1
@@ -142,7 +156,7 @@ int main()
             while (read(fd01[0], recibo, 20) < 0)
             {
             }
-            printf("proceso h1\n");
+            printf("\nPROCESO H1\n");
             strcpy(entrego, play("../outfiles/Jugador2", "../outfiles/Drop"));
 
             close(fd10[0]);
@@ -161,7 +175,7 @@ int main()
             while (read(fd02[0], recibo, 20) < 0)
             {
             }
-            printf("proceso h2\n");
+            printf("\nPROCESO H2\n");
             strcpy(entrego, play("../outfiles/Jugador3", "../outfiles/Drop"));
 
             close(fd20[0]);
@@ -169,7 +183,7 @@ int main()
         }
     }
     //proceso hijo 3
-    if (p == fam[3])
+    /*if (p == fam[3])
     {
         while (win)
         {
@@ -186,5 +200,5 @@ int main()
             close(fd30[0]);
             write(fd30[1], entrego, 20);
         }
-    }
+    }*/
 }
