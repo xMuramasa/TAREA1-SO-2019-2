@@ -84,7 +84,8 @@ int main()
     /*  if(p == fam[0]) printf("padre\n");
         if(p == fam[1]) printf("hijo1\n");
         if(p == fam[2]) printf("hijo2\n");
-        if(p == fam[3]) printf("hijo3\n");  */
+        if(p == fam[3]) printf("hijo3\n");
+    */
     p = getpid();
 
     if (p == fam[0])
@@ -100,9 +101,12 @@ int main()
             strcpy(entrego, play("../outfiles/Jugador1", "../outfiles/Drop"));
             write(fd01[1], entrego, 20);
 
-            close(fd10[1]); //close write fd10
-            while (read(fd10[0], recibo, 20) < 0)
-            {
+            if(strcmp(entrego,"J") != 0){
+                close(fd10[1]); //close write fd10
+                while (read(fd10[0], recibo, 20) < 0)
+                {
+                }
+
             }
 
             //interaccion hijo 2
@@ -145,6 +149,7 @@ int main()
             write(fd10[1], entrego, 20);
         }
     }
+    //proceso hijo 2
     if (p == fam[2])
     {
         while (win)
@@ -163,7 +168,7 @@ int main()
             write(fd20[1], entrego, 20);
         }
     }
-
+    //proceso hijo 3
     if (p == fam[3])
     {
         while (win)

@@ -195,21 +195,21 @@ int printHand(char *dName, int type){
     }
 
     if (type){
-        printf("\n************* MI MANO *************\n");
-        printf("*\t[0] Robar una carta\n");
+        printf("\n************** MI MANO **************\n");
+        printf("*\t[0]\t Robar una carta%3s *\n","");
     }
     if (d){
         while ((dir = readdir(d)) != NULL){
             if (strcmp(dir->d_name, ".") != 0 && strcmp(dir->d_name, "..") != 0){
                 sscanf(dir->d_name, "%[^_]_%[^_]_%[^.txt]", buffer[0], buffer[1], buffer[2]);
-                printf("*\t[%d] %s %s %s\n", index+1, buffer[0], buffer[1], buffer[2]);
+                printf("*\t[%d]\t %-15s %-2s *\n", index+1, buffer[0], buffer[1]);
                 index++;
             }
         }
 
         if (type){
-            printf("*\t[%d] Pasar el turno\n", index+1);
-            printf("***********************************\n");}
+            printf("*\t[%d]\t Pasar el turno %3s *\n", index+1,"");
+            printf("*************************************\n");}
         closedir(d);
     }
 
@@ -253,10 +253,11 @@ void draw(char *sourceDir, char *destDir, int randNumber){
 void drawHand(char *sourceDir, char *destDir){
     int randomNumber = 0;
     int moved = 0;
-    //random() % j;
+    time_t t;
+    srand((unsigned) time(&t));
     while(moved < 7){
 
-        randomNumber = random() % (108-2);
+        randomNumber = rand() % (108-2);
         if(randomNumber < 108){
             draw(sourceDir, destDir, randomNumber);
             moved++;
@@ -381,29 +382,60 @@ char* play(char *sourceDir, char *destDir){
     handSize = cardInHand(sourceDir);
     input = selection(0,handSize+1);
 
+    //robar carta
     if (input == 0){
-
         printf("Se ha seleccionado robar una carta.\n");
         draw("../outfiles/Deck", sourceDir, randomNumber);
         lastDrop = printHand(sourceDir, 1);
         //ROBAR
     }
+    //pasar turno
     else if(input == last){
         printf("se ha seleccionado pasar\n");
         return n;
     }
+    //jugar
     else{
         //cartas seleccion y drop
         cartaIn = cardName(sourceDir,input-1);
-        cartaOut = cardName(destDir, input-1);//
+        cartaOut = cardName(destDir, input-1);
 
         //nombre de cartas
         sprintf(buffer1, "%s_%s_%s.txt",cartaIn[0], cartaIn[1], cartaIn[2]);
         sprintf(buffer2, "%s_%s_%s.txt",cartaOut[0], cartaOut[1], cartaOut[2]);
 
-        //cambio de lugar carta seleccionada
-        myRemoveFile(buffer2, destDir);
-        moveFileToFolder(buffer1, sourceDir, destDir);
+        if (strcmp(cartaIn[0],"negro") == 0){
+            //se jugo un cambio de color
+            if (strcmp(cartaIn[1],"CC") == 0){
+                printf("Escoja un color\n[1] Rojo\n[2] Azul\n[3] Amarillo\n[4] Verde\n");
+                input = selection(1,4);
+                printf("COLOR ESCOGIDO:\t%s\n",cardNames[input-1]);
+                char color[50];
+                sprintf(color, "%s_%s_%s.txt",cardNames[input-1], cardNames[input-1], cardNames[input-1]);
+                myRemoveFile(buffer2, destDir);
+                moveFileToFolder(color, sourceDir, destDir);
+
+            }
+            //se jugo un +4
+            else{
+                printf("TOMA UN +4\n");
+            }
+
+        }
+        else if (strcmp(cartaIn[0],cartaOut[0]) == 0 && strcmp(cartaIn[1],"J") == 0){
+            strcpy(y,"j");
+            return y;
+        }
+
+
+        else if (strcmp(cartaIn[0],cartaOut[0]) == 0|| strcmp(cartaIn[1],cartaOut[2]) == 0){
+            //cambio de lugar carta seleccionada
+            myRemoveFile(buffer2, destDir);
+            sprintf(buffer1, "%s_%s_%s.txt",cartaIn[0], cartaIn[1], cartaIn[2]);
+            moveFileToFolder(buffer1, sourceDir, destDir);
+        }
+        else
+            printf("CARTA ERRONEA\n");
 
         //memoria
         for (i = 0; i < 3; i++){
