@@ -13,6 +13,7 @@ out: obj/main.o obj/functions.o
 
 clean:
 	rm -f obj/* *~ core $(INCDIR)/*~ 
+	rm -rf ../outfiles/* *~ core $(INCDIR)/*~ 
 
 run:
 	 ./out
