@@ -11,7 +11,7 @@
 			(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ ✧ﾟ･: *ヽ(◕ヮ◕ヽ)(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ ✧ﾟ･: *ヽ(◕ヮ◕ヽ)
 # Instrucciones de uso:
 	
-	** para correr el programa en una linea (make && make run)
+	** para correr el programa en una linea (make clean && make && make run)
    #### Entrega 1:
 		** Funcionan todas las funciones que se encuentran comentadas **. 
 		* Para probar funciones, editar el archivo main.c
