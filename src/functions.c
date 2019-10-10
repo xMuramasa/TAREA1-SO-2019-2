@@ -338,16 +338,17 @@ int cardInHand(char* sourceDir){
 }
 
 /* int play function
-*   funcion : jhace la accion de un turno
+*   funcion : hace la accion de un turno
 *   prints  : muestra la carta en juego.
 *   retorna : entero que avisa si juega o no
 */
-///string
 char* play(char *sourceDir, char *destDir){
 
     //numero random para robar una carta
     int totalCards = cardInHand("../outfiles/Deck/");
-    int randomNumber = random() % (108 - totalCards);
+    time_t t;
+    srand((unsigned)time(&t));
+    int randomNumber = rand() % (108 - totalCards);
     while (randomNumber == 0){
         randomNumber = random() % (108 - totalCards);
     }
@@ -365,7 +366,6 @@ char* play(char *sourceDir, char *destDir){
     //buffers de nombres y accion
     char buffer1[50];
     char buffer2[50];
-    char action[50];
 
     //limpieza de buffers
     strcpy(buffer1, "");
@@ -447,4 +447,27 @@ char* play(char *sourceDir, char *destDir){
     }
 
     return y;
+}
+
+
+/* void createGame function
+*   funcion : hace carpetas para el juego y las manos
+*   prints  : las acciones que realiza en el momento
+*   retorna : nada
+*/
+void createGame(){
+    createDeck();
+    puts("");
+    myMkdir("../outfiles/Drop");     //creacion del mazo de drop
+    myMkdir("../outfiles/Jugador1"); //creacion del mazo del jugador 1
+    myMkdir("../outfiles/Jugador2"); //creacion del mazo del jugador 2
+    myMkdir("../outfiles/Jugador3"); //creacion del mazo del jugador 3
+    myMkdir("../outfiles/Jugador4"); //creacion del mazo del jugador 4
+    puts("");
+
+    drawHand("../outfiles/Deck", "../outfiles/Jugador1");
+    drawHand("../outfiles/Deck", "../outfiles/Jugador2");
+    drawHand("../outfiles/Deck", "../outfiles/Jugador3");
+    drawHand("../outfiles/Deck", "../outfiles/Jugador4");
+    puts("");
 }

@@ -17,6 +17,7 @@ void test3(char *dName);
 int selection(int lower, int upper);
 char** cardName(char *sourceDir, int cardNumber);
 char* play(char *sourceDir, char *destDir);
+void createGame();
 
 #endif
-//
+    //
