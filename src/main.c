@@ -69,11 +69,7 @@ int main()
         fam[2] = fam[3] = -1;
         fam[1] = getpid();
     }
-    /*  if(p == fam[0]) printf("padre\n");
-        if(p == fam[1]) printf("hijo1\n");
-        if(p == fam[2]) printf("hijo2\n");
-        if(p == fam[3]) printf("hijo3\n");
-    */
+
     p = getpid();
 
     if (p == fam[0])
@@ -115,17 +111,21 @@ int main()
                 strcpy(recibo,"a");
             }
 
-
-
             //interaccion hijo 3
-            /*strcpy(entrego, recibo);
-            close(fd03[0]); // close read fd03
-            write(fd03[1], entrego, 20);
-
-            close(fd30[1]); //close write fd30
-            while (read(fd30[0], recibo, 20) < 0)
+            if (strcmp(recibo, "j") != 0)
             {
-            }*/
+                strcpy(entrego, recibo);
+                close(fd03[0]); // close read fd03
+                write(fd03[1], entrego, 20);
+                close(fd30[1]); //close write fd30
+                while (read(fd30[0], recibo, 20) < 0)
+                {
+                }
+            }
+            else
+            {
+                strcpy(recibo, "a");
+            }
         }
     }
     //proceso hijo 1
@@ -144,6 +144,7 @@ int main()
             write(fd10[1], entrego, 20);
         }
     }
+
     //proceso hijo 2
     if (p == fam[2])
     {
@@ -160,23 +161,19 @@ int main()
             write(fd20[1], entrego, 20);
         }
     }
-    //proceso hijo 3
-    /*if (p == fam[3])
-    {
-        while (win)
-        {
-            strcpy(recibo, "");
-            strcpy(entrego, "");
 
+    //proceso hijo 3
+    if (p == fam[3]){
+        while (win){
             close(fd03[1]);
-            while (read(fd03[0], recibo, 20) < 0)
-            {
+            while (read(fd03[0], recibo, 30) < 0){
             }
-            printf("proceso h3\n");
+            printf("\nPROCESO H3\n");
             strcpy(entrego, play("../outfiles/Jugador4", "../outfiles/Drop"));
 
             close(fd30[0]);
             write(fd30[1], entrego, 20);
         }
-    }*/
+    }
+
 }
