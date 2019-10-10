@@ -350,18 +350,19 @@ char* play(char *sourceDir, char *destDir){
     srand((unsigned)time(&t));
     int randomNumber = rand() % (108 - totalCards);
     while (randomNumber == 0){
-        randomNumber = random() % (108 - totalCards);
+        randomNumber = rand() % (108 - totalCards);
     }
 
     char* y = "y";
     char* n = "n";
+    char* j = "j";
 
     // variables de input, tamaño de la mano, print cartas de mano jugador, print cartas drop
     int input, handSize, last, lastDrop, i;
 
     // arreglos de carta actual en seleccion y drop
     char (**cartaIn);
-	char (**cartaOut);
+    char (**cartaOut);
 
     //buffers de nombres y accion
     char buffer1[50];
@@ -422,13 +423,21 @@ char* play(char *sourceDir, char *destDir){
             }
 
         }
-        else if (strcmp(cartaIn[0],cartaOut[0]) == 0 && strcmp(cartaIn[1],"J") == 0){
-            strcpy(y,"j");
-            return y;
+        //se jugo un jump
+        else if (strcmp(cartaIn[1],"J") == 0){
+            if(strcmp(cartaOut[0],cartaIn[0]) == 0 || strcmp(cartaOut[1],"J") == 0){
+                myRemoveFile(buffer2, destDir);
+                sprintf(buffer1, "%s_%s_%s.txt",cartaIn[0], cartaIn[1], cartaIn[2]);
+                moveFileToFolder(buffer1, sourceDir, destDir);
+                printf("SE JUGO UN JUMP\n");
+                return j;
+            }
+            else
+                printf("CARTA ERRONEA\n");
         }
 
-
-        else if (strcmp(cartaIn[0],cartaOut[0]) == 0|| strcmp(cartaIn[1],cartaOut[2]) == 0){
+        //se jugo un carta normal
+        else if (strcmp(cartaIn[0],cartaOut[0]) == 0|| strcmp(cartaIn[1],cartaOut[1]) == 0){
             //cambio de lugar carta seleccionada
             myRemoveFile(buffer2, destDir);
             sprintf(buffer1, "%s_%s_%s.txt",cartaIn[0], cartaIn[1], cartaIn[2]);
@@ -461,7 +470,11 @@ void createGame(){
     puts("");
     
     //creacion del mazo de drop
+    time_t t;
+    srand((unsigned)time(&t));
+    int  randomNumber = rand() % (108-2);
     myMkdir("../outfiles/Drop");
+    draw("../outfiles/Deck", "../outfiles/Drop",randomNumber);
     puts("");
 
     //creacion del mazo del jugador 1
