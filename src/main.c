@@ -23,7 +23,6 @@ int main()
     int fd30[2]; // msg de h3 a padre
     int i, hijo1, hijo2, hijo3;
     int win = 1;
-    int randomNumber = 0;
 
     char recibo[2];
     char entrego[2];
@@ -40,9 +39,6 @@ int main()
     //comment
     //mazo real
     createGame();
-
-    randomNumber = random() % (108-2);
-    draw("../outfiles/Deck", "../outfiles/Drop",randomNumber);
 
     int fam[4];
     fam[0] = getpid();
@@ -68,7 +64,8 @@ int main()
             fam[2] = getpid();
         }
     }
-    else {
+    else
+    {
         fam[2] = fam[3] = -1;
         fam[1] = getpid();
     }
@@ -84,24 +81,26 @@ int main()
         while (win)
         {
             printf("\nPROCESO PADRE\n");
-            strcpy(recibo, "");
-            strcpy(entrego, "");
 
             //interaccion hijo 1
+            close(fd01[0]); // close read fd01
             if (strcmp(recibo,"j") != 0){
-                close(fd01[0]); // close read fd01
                 strcpy(entrego, play("../outfiles/Jugador1", "../outfiles/Drop"));
+            }
+            else{
+                strcpy(recibo,"a");
+            }
+ 
+            if (strcmp(entrego,"j") != 0){
                 write(fd01[1], entrego, 20);
-
                 close(fd10[1]); //close write fd10
                 while (read(fd10[0], recibo, 20) < 0)
                 {
                 }
             }
-            else{
-                strcpy(recibo,"a");
-            }
 
+            
+ 
             //interaccion hijo 2
             if (strcmp(recibo,"j") != 0){
                 strcpy(entrego, recibo);
@@ -115,6 +114,7 @@ int main()
             else{
                 strcpy(recibo,"a");
             }
+
 
 
             //interaccion hijo 3
@@ -133,9 +133,6 @@ int main()
     {
         while (win)
         {
-            strcpy(recibo, "");
-            strcpy(entrego, "");
-
             close(fd01[1]);
             while (read(fd01[0], recibo, 20) < 0)
             {
@@ -152,9 +149,6 @@ int main()
     {
         while (win)
         {
-            strcpy(recibo, "");
-            strcpy(entrego, "");
-
             close(fd02[1]);
             while (read(fd02[0], recibo, 20) < 0)
             {
