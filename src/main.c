@@ -1,5 +1,5 @@
 // C program to demonstrate use of fork() and pipe()
-// robado de geeksforgeeks, el martin fue
+// robado de geeksforgeeks, muramasa se lo robo
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
