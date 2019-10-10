@@ -456,18 +456,32 @@ char* play(char *sourceDir, char *destDir){
 *   retorna : nada
 */
 void createGame(){
+    //creacion del mazo de cartas
     createDeck();
     puts("");
-    myMkdir("../outfiles/Drop");     //creacion del mazo de drop
-    myMkdir("../outfiles/Jugador1"); //creacion del mazo del jugador 1
-    myMkdir("../outfiles/Jugador2"); //creacion del mazo del jugador 2
-    myMkdir("../outfiles/Jugador3"); //creacion del mazo del jugador 3
-    myMkdir("../outfiles/Jugador4"); //creacion del mazo del jugador 4
+    
+    //creacion del mazo de drop
+    myMkdir("../outfiles/Drop");
     puts("");
 
+    //creacion del mazo del jugador 1
+    myMkdir("../outfiles/Jugador1"); 
     drawHand("../outfiles/Deck", "../outfiles/Jugador1");
+    puts("");
+
+    //creacion del mazo del jugador 2
+    myMkdir("../outfiles/Jugador2"); 
     drawHand("../outfiles/Deck", "../outfiles/Jugador2");
+    puts("");
+
+    //creacion del mazo del jugador 3
+    myMkdir("../outfiles/Jugador3");
     drawHand("../outfiles/Deck", "../outfiles/Jugador3");
+    puts("");
+
+    //creacion del mazo del jugador 4
+    myMkdir("../outfiles/Jugador4");
     drawHand("../outfiles/Deck", "../outfiles/Jugador4");
     puts("");
+
 }
