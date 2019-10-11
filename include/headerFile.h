@@ -1,23 +1,32 @@
 #ifndef HEADER_FILE
 #define HEADER_FILE
+void createGame();
 
 void myRmdir(char *nombre_carpeta);
 void myMkdir(char *nombre_carpeta);
-void checkCreate(char *buffer);
-void checkMove(char *buffer);
-void createDeck();
+
 void myRemoveFile(char *fileName, char *fileSrc);
-void moveFileToFolder(char *fileName, char *fileSrc, char *fileDest);
+
+void checkCreate(char *buffer);
+void createDeck();
+
 void createTest();
-void test(char *dName);
+
+void moveFileToFolder(char *fileName, char *fileSrc, char *fileDest);
+void checkMove(char *buffer);
+
 int printHand(char *dName, int type);
+
 void draw(char *sourceDir, char *destDir, int randNumber);
+void drawX(char *sourceDir, char *destDir, int x);
 void drawHand(char *sourceDir, char *destDir);
-void test3(char *dName);
+
 int selection(int lower, int upper);
+
 char** cardName(char *sourceDir, int cardNumber);
-char* play(char *sourceDir, char *destDir);
-void createGame();
+int cardInHand(char *sourceDir);
+
+char *play(char *sourceDir, char *destDir);
 
 #endif
     //
