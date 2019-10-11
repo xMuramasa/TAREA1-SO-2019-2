@@ -8,8 +8,8 @@ DEPS = ../include/headerFile.h
 obj/%.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-out: obj/main3.o obj/functions.o 
-	$(CC) -o out obj/main3.o obj/functions.o 
+out: obj/main.o obj/functions.o 
+	$(CC) -o out obj/main.o obj/functions.o 
 
 clean:
 	rm -f obj/* *~ core $(INCDIR)/*~ 
