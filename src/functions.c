@@ -320,7 +320,11 @@ int selection(int lower, int upper){
 }
 
 
-
+/* int cardinhand function
+*   funcion : cuenta las cartas de una mano
+*   prints  : nada
+*   retorna : entero, total de cartas de la mano
+*/
 int cardInHand(char* sourceDir){
     DIR *d;
     struct dirent *dir;
@@ -337,10 +341,11 @@ int cardInHand(char* sourceDir){
 	return hand;
 }
 
-/* int play function
+
+/* char* play function
 *   funcion : hace la accion de un turno
 *   prints  : muestra la carta en juego.
-*   retorna : entero que avisa si juega o no
+*   retorna : string que avisa accion del turno
 */
 char* play(char *sourceDir, char *destDir){
 
@@ -355,7 +360,8 @@ char* play(char *sourceDir, char *destDir){
 
     char* y = "y";
     char* n = "n";
-    char* j = "j";
+    char *j = "j";
+    char *r = "r";
 
     // variables de input, tamaño de la mano, print cartas de mano jugador, print cartas drop
     int input, handSize, last, lastDrop, i;
@@ -435,7 +441,16 @@ char* play(char *sourceDir, char *destDir){
             else
                 printf("CARTA ERRONEA\n");
         }
-
+        else if (strcmp(cartaIn[1], "R") == 0){
+            if (strcmp(cartaOut[0], cartaIn[0]) == 0 || strcmp(cartaOut[1], "R") == 0){
+                myRemoveFile(buffer2, destDir);
+                sprintf(buffer1, "%s_%s_%s.txt", cartaIn[0], cartaIn[1], cartaIn[2]);
+                moveFileToFolder(buffer1, sourceDir, destDir);
+                printf("SE JUGO UN ASREVER\n");
+                return r;
+            }
+            else printf("CARTA ERRONEA\n");
+        }
         //se jugo un carta normal
         else if (strcmp(cartaIn[0],cartaOut[0]) == 0|| strcmp(cartaIn[1],cartaOut[1]) == 0){
             //cambio de lugar carta seleccionada
