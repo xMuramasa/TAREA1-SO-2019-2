@@ -438,16 +438,16 @@ char *play(char *sourceDir, char *destDir)
     strcpy(buffer1, "");
     strcpy(buffer2, "");
 
-    //cartas player
-    last = printHand(sourceDir, 1);
-    //carta drop
-    printf("\nDROP ******************** DROP\n");
-    lastDrop = printHand("../outfiles/Drop", 0);
-    printf("DROP ******************** DROP\n\n");
-
-    // selecion de carta del jugador
-    handSize = cardInHand(sourceDir);
     while(1){
+        //cartas player
+        last = printHand(sourceDir, 1);
+        //carta drop
+        printf("\nDROP ******************** DROP\n");
+        lastDrop = printHand("../outfiles/Drop", 0);
+        printf("DROP ******************** DROP\n\n");
+
+        // selecion de carta del jugador
+        handSize = cardInHand(sourceDir);
         input = selection(0, handSize + 1);
 
         //robar carta
@@ -456,8 +456,7 @@ char *play(char *sourceDir, char *destDir)
             printf("Se ha seleccionado robar una carta.\n");
             draw("../outfiles/Deck", sourceDir, randomNumber);
             inCaseThatDraws++;
-            lastDrop = printHand(sourceDir, 1);
-            printf("No se puede robar otra vez\n");
+            printf("\n\nNo se puede robar otra vez\n");
         }
         //pasar turno
         else if (input == last)
