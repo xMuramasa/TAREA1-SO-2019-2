@@ -28,5 +28,6 @@ int cardInHand(char *sourceDir);
 
 char *play(char *sourceDir, char *destDir);
 
+void createGame();
+
 #endif
-    //

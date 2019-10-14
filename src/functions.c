@@ -375,6 +375,11 @@ int selection(int lower, int upper)
     return selection;
 }
 
+/* int cardInHand function
+*   funcion : cuenta la totalidad de cartas de una mano
+*   prints  :nadauestra la carta en juego.
+*   retorna : entero que avisa cuantas cartas tiene un jugador
+*/
 int cardInHand(char *sourceDir)
 {
     DIR *d;
@@ -396,11 +401,10 @@ int cardInHand(char *sourceDir)
 }
 
 /* int play function
-*   funcion : jhace la accion de un turno
+*   funcion : hace la accion de un turno
 *   prints  : muestra la carta en juego.
 *   retorna : entero que avisa si juega o no
 */
-///string
 char *play(char *sourceDir, char *destDir)
 {
 
@@ -449,14 +453,17 @@ char *play(char *sourceDir, char *destDir)
         // selecion de carta del jugador
         handSize = cardInHand(sourceDir);
         input = selection(0, handSize + 1);
+        puts("");
 
         //robar carta
         if (input == 0 && inCaseThatDraws < 1)
         {
-            printf("Se ha seleccionado robar una carta.\n");
             draw("../outfiles/Deck", sourceDir, randomNumber);
+            printf("Se ha seleccionado robar una carta.\n");
+            puts("\nNo se puede robar otra vez en el mismo turno\n");
+            puts("\t Seleccionar una accion");
+            puts("\t Mismo jugador de antes");
             inCaseThatDraws++;
-            printf("\n\nNo se puede robar otra vez\n");
         }
         //pasar turno
         else if (input == last)
@@ -481,8 +488,10 @@ char *play(char *sourceDir, char *destDir)
                 //se jugo un cambio de color
                 if (strcmp(cartaIn[1], "CC") == 0)
                 {
+                    puts("");
                     printf("Escoja un color\n[1] Rojo\n[2] Azul\n[3] Amarillo\n[4] Verde\n");
                     input = selection(1, 4);
+                    puts("");
                     printf("COLOR ESCOGIDO:\t%s\n", cardNames[input - 1]);
                     char color[50];
                     sprintf(color, "%s_%s_%s.txt", cardNames[input - 1], cardNames[input - 1], cardNames[input - 1]);
@@ -493,13 +502,16 @@ char *play(char *sourceDir, char *destDir)
                 //se jugo un +4
                 else
                 {
+                    puts("");
                     printf("Escoja un color\n[1] Rojo\n[2] Azul\n[3] Amarillo\n[4] Verde\n");
                     input = selection(1, 4);
+                    puts("");
                     printf("COLOR ESCOGIDO:\t%s\n", cardNames[input - 1]);
                     char color[50];
                     sprintf(color, "%s_%s_%s.txt", cardNames[input - 1], cardNames[input - 1], cardNames[input - 1]);
                     myRemoveFile(buffer2, destDir);
                     moveFileToFolder(color, sourceDir, destDir);
+                    puts("");
                     printf("TOMA UN +4\n");
                     return c;
                 }
@@ -512,12 +524,16 @@ char *play(char *sourceDir, char *destDir)
                     myRemoveFile(buffer2, destDir);
                     sprintf(buffer1, "%s_%s_%s.txt", cartaIn[0], cartaIn[1], cartaIn[2]);
                     moveFileToFolder(buffer1, sourceDir, destDir);
+                    puts("");
                     printf("SE JUGO UN JUMP\n");
                     return j;
                 }
-                else
+                else{
+                    puts("");
                     printf("CARTA ERRONEA\n");
+                }
             }
+
             //se jugo un +2
             else if (strcmp(cartaIn[1], "+2") == 0)
             {
@@ -526,11 +542,14 @@ char *play(char *sourceDir, char *destDir)
                     myRemoveFile(buffer2, destDir);
                     sprintf(buffer1, "%s_%s_%s.txt", cartaIn[0], cartaIn[1], cartaIn[2]);
                     moveFileToFolder(buffer1, sourceDir, destDir);
+                    puts("");
                     printf("SE JUGO UN +2\n");
                     return d;
                 }
-                else
+                else{
+                    puts("");
                     printf("CARTA ERRONEA\n");
+                }
             }
 
             //se jugo un carta normal
@@ -540,11 +559,13 @@ char *play(char *sourceDir, char *destDir)
                 myRemoveFile(buffer2, destDir);
                 sprintf(buffer1, "%s_%s_%s.txt", cartaIn[0], cartaIn[1], cartaIn[2]);
                 moveFileToFolder(buffer1, sourceDir, destDir);
+                puts("");
                 return y;
             }
-            else
+            else{
+                puts("");
                 printf("CARTA ERRONEA\n");
-
+            }
             //memoria
             for (i = 0; i < 3; i++)
             {
@@ -555,4 +576,36 @@ char *play(char *sourceDir, char *destDir)
             free(cartaOut);
         }
     }
+}
+
+/* void createGame function
+*   funcion : crea carpetas y cartas de los jugadores
+*   prints  : muestra la accion que está realizando en el momento
+*   retorna : nada
+*/
+void createGame(){
+    int randomNumber = 0;
+    time_t t;
+    srand((unsigned)time(&t));
+    puts("Comenzar creacion de carpetas del juego.");
+    puts("");
+    createDeck();
+    puts("");
+    myMkdir("../outfiles/Drop");     //creacion del mazo de drop
+    myMkdir("../outfiles/Jugador1"); //creacion del mazo del jugador 1
+    myMkdir("../outfiles/Jugador2"); //creacion del mazo del jugador 2
+    myMkdir("../outfiles/Jugador3"); //creacion del mazo del jugador 3
+    myMkdir("../outfiles/Jugador4"); //creacion del mazo del jugador 4
+    puts("");
+
+    drawHand("../outfiles/Deck", "../outfiles/Jugador1");
+    drawHand("../outfiles/Deck", "../outfiles/Jugador2");
+    drawHand("../outfiles/Deck", "../outfiles/Jugador3");
+    drawHand("../outfiles/Deck", "../outfiles/Jugador4");
+    puts("");
+
+    randomNumber = rand() % (108 - 2);
+    draw("../outfiles/Deck", "../outfiles/Drop", randomNumber);
+    puts("");
+    puts("Creación de carpetas de juego finalizada.");
 }
