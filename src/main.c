@@ -27,6 +27,9 @@ int main()
     char entrego[2];    // string de mensajes entregdos
     char recibo[2];     // string de mensajes recibidos
 
+    int rev = 0;
+    int cont = 0;
+
     pid_t p;             // pid
 
     // comprobacion de creacion de pipes
@@ -38,8 +41,8 @@ int main()
 
     //creación del juego
     createGame();
-    
-    // creacion de procesos hijos 
+
+    // creacion de procesos hijos
     int fam[4];
     fam[0] = getpid();
     hijo1 = fork();
@@ -78,7 +81,6 @@ int main()
         while (win)
         {
             puts("\n\n\n");
-            printf("\n\tTURNO DEL JUGADOR 1\n");
 
             //+++++++++++++++++++++++++++++++++++++++++++++turno j1+++++++++++++++++++++++++++++++++++++++++++++
             close(fd01[0]); // close read fd01
@@ -87,34 +89,62 @@ int main()
             {
                 drawX("../outfiles/Deck", "../outfiles/Jugador1", 2);
                 strcpy(entrego, "a");
+                strcpy(recibo, "a");
             }
             //+4
             else if (strcmp(recibo, "c") == 0)
             {
                 drawX("../outfiles/Deck", "../outfiles/Jugador1", 4);
                 strcpy(entrego, "a");
+                strcpy(recibo, "a");
             }
             //jump
             else if (strcmp(recibo, "j") == 0)
             {
                 strcpy(entrego, "a");
             }
+            //reversa
+            else if (strcmp(recibo, "r") == 0)
+            {
+                if (rev == 0){
+                    rev = 1;
+                }
+                else rev = 0;
+
+                strcpy(entrego, "a");
+                cont = 1;
+            }
+            else if (rev == 1 && cont != 0){
+                cont--;
+            }
             //cualquier carta
             else
             {
+                printf("\n\tTURNO JUGADOR 1\n");
+                cont = 1;
                 strcpy(entrego, play("../outfiles/Jugador1", "../outfiles/Drop"));
             }
 
             //UNO
             if (cardInHand("../outfiles/Jugador1") == 1)
             {
-                printf("JUGADOR 1 : ¡¡¡ UNO !!!\n");
+                puts("\n\n\n");
+                printf("*************************\n");
+                printf("*JUGADOR 1 : ¡¡¡ UNO !!!*\n");
+                printf("*************************\n");
                 puts("");
             }
             //gana
             if (cardInHand("../outfiles/Jugador1") == 0)
             {
-                printf("JUGADOR 1 : ¡¡¡ GANA !!!\n");
+                puts("\n\n\n");
+                printf("###########################\n");
+                printf("##JUGADOR 1: ¡¡¡ GANA !!!##\n");
+                printf("###########################\n");
+                strcpy(entrego, "f");
+                write(fd01[1], entrego, 20);
+                write(fd02[1], entrego, 20);
+                write(fd03[1], entrego, 20);
                 puts("");
                 break;
             }
@@ -124,6 +154,7 @@ int main()
             if (strcmp(entrego, "d") == 0)
             {
                 drawX("../outfiles/Deck", "../outfiles/Jugador2", 2);
+                strcpy(entrego, "a");
                 strcpy(recibo, "a");
             }
             //+4
@@ -131,15 +162,32 @@ int main()
             {
                 drawX("../outfiles/Deck", "../outfiles/Jugador2", 4);
                 strcpy(entrego, "a");
+                strcpy(recibo, "a");
             }
             //jump
             else if (strcmp(entrego, "j") == 0)
             {
                 strcpy(recibo, "a");
             }
-            //cualquier carta
-            else
+            //reversa
+            else if (strcmp(entrego, "r") == 0)
             {
+                if (rev == 0)
+                {
+                    rev = 1;
+                }
+                else
+                    rev = 0;
+
+                strcpy(recibo, "a");
+                cont = 1;
+            }
+            else if (rev == 1 && cont != 0){
+                cont--;
+            }
+            //cualquier carta
+            else{
+                cont = 1;
                 write(fd01[1], entrego, 20);
                 close(fd10[1]); //close write fd10
                 //recibe jugada j2
@@ -150,14 +198,25 @@ int main()
             //UNO
             if (cardInHand("../outfiles/Jugador2") == 1)
             {
-                printf("JUGADOR 2 : ¡¡¡ UNO !!!\n");
+                puts("\n\n\n");
+                printf("*************************\n");
+                printf("*JUGADOR 2: ¡¡¡ UNO !!!*\n");
+                printf("*************************\n");
                 puts("");
             }
             //gana
             if (cardInHand("../outfiles/Jugador2") == 0)
             {
-                printf("JUGADOR 2 : ¡¡¡ GANA !!!\n");
+                puts("\n\n\n");
+                printf("###########################\n");
+                printf("##JUGADOR 2: ¡¡¡ GANA !!!##\n");
+                printf("###########################\n");
+                strcpy(entrego, "f");
+                write(fd01[1], entrego, 20);
+                write(fd02[1], entrego, 20);
+                write(fd03[1], entrego, 20);
                 puts("");
+
                 break;
             }
 
@@ -167,21 +226,41 @@ int main()
             {
                 drawX("../outfiles/Deck", "../outfiles/Jugador3", 2);
                 strcpy(entrego, "a");
+                strcpy(recibo, "a");
             }
             //+4
             else if (strcmp(entrego, "c") == 0)
             {
                 drawX("../outfiles/Deck", "../outfiles/Jugador3", 4);
                 strcpy(entrego, "a");
+                strcpy(recibo, "a");
             }
             //jump
             else if (strcmp(recibo, "j") == 0)
             {
                 strcpy(recibo, "a");
             }
+            //reversa
+            else if (strcmp(recibo, "r") == 0)
+            {
+                if (rev == 0)
+                {
+                    rev = 1;
+                }
+                else
+                    rev = 0;
+
+                strcpy(recibo, "a");
+                cont = 1;
+            }
+            else if (rev == 1 && cont != 0)
+            {
+                cont--;
+            }
             //cualquier carta
             else
             {
+                cont = 1;
                 strcpy(entrego, recibo);
                 close(fd02[0]); // close read fd02
                 write(fd02[1], entrego, 20);
@@ -193,13 +272,23 @@ int main()
             //UNO
             if (cardInHand("../outfiles/Jugador3") == 1)
             {
-                printf("JUGADOR 3 : ¡¡¡ UNO !!!\n");
+                puts("\n\n\n");
+                printf("*************************\n");
+                printf("*JUGADOR 3 : ¡¡¡ UNO !!!*\n");
+                printf("*************************\n");
                 puts("");
             }
             //gana
             if (cardInHand("../outfiles/Jugador3") == 0)
             {
-                printf("JUGADOR 3: ¡¡¡ GANA !!!\n");
+                puts("\n\n\n");
+                printf("###########################\n");
+                printf("##JUGADOR 3: ¡¡¡ GANA !!!##\n");
+                printf("###########################\n");
+                strcpy(entrego,"f");
+                write(fd01[1], entrego, 20);
+                write(fd02[1], entrego, 20);
+                write(fd03[1], entrego, 20);
                 puts("");
                 break;
             }
@@ -210,16 +299,36 @@ int main()
             if (strcmp(recibo, "d") == 0){
                 drawX("../outfiles/Deck", "../outfiles/Jugador4", 2);
                 strcpy(entrego, "a");
+                strcpy(recibo, "a");
             }
             //+4
             else if (strcmp(entrego, "c") == 0){
                 drawX("../outfiles/Deck", "../outfiles/Jugador4", 4);
                 strcpy(entrego, "a");
+                strcpy(recibo, "a");
             }
             //jump
             else if (strcmp(recibo, "j") == 0){
                 strcpy(recibo, "a");
             }
+            //reversa
+            else if (strcmp(recibo, "r") == 0)
+            {
+                if (rev == 0)
+                {
+                    rev = 1;
+                }
+                else
+                    rev = 0;
+
+                strcpy(recibo, "a");
+                cont = 2;
+            }
+            else if (rev == 1 && cont != 0)
+            {
+                cont--;
+            }
+
             //cualquier carta
             else{
                 strcpy(entrego, recibo);
@@ -233,13 +342,23 @@ int main()
             //UNO
             if (cardInHand("../outfiles/Jugador4") == 1)
             {
-                printf("JUGADOR 4 : ¡¡¡ UNO !!!\n");
+                puts("\n\n\n");
+                printf("*************************\n");
+                printf("*JUGADOR 4 : ¡¡¡ UNO !!!*\n");
+                printf("*************************\n");
                 puts("");
             }
             //gana
             if (cardInHand("../outfiles/Jugador4") == 0)
             {
-                printf("JUGADOR 4 : ¡¡¡ GANA !!!\n");
+                puts("\n\n\n");
+                printf("###########################\n");
+                printf("##JUGADOR 4: ¡¡¡ GANA !!!##\n");
+                printf("###########################\n");
+                strcpy(entrego,"f");
+                write(fd01[1], entrego, 20);
+                write(fd02[1], entrego, 20);
+                write(fd03[1], entrego, 20);
                 puts("");
                 break;
             }
@@ -255,6 +374,12 @@ int main()
             while (read(fd01[0], recibo, 20) < 0)
             {
             }
+            //end game
+            if (strcmp(recibo, "f") == 0)
+            {
+                break;
+            }
+
             puts("\n\n\n");
             printf("\n\tTURNO JUGADOR 2\n");
             strcpy(entrego, play("../outfiles/Jugador2", "../outfiles/Drop"));
@@ -271,6 +396,11 @@ int main()
             close(fd02[1]);
             while (read(fd02[0], recibo, 20) < 0)
             {
+            }
+            //end game
+            if (strcmp(recibo, "f") == 0)
+            {
+                break;
             }
             puts("\n\n\n");
             printf("\n\tTURNO JUGADOR 3\n");
@@ -291,6 +421,11 @@ int main()
             close(fd03[1]);
             while (read(fd03[0], recibo, 20) < 0)
             {
+            }
+            //end game
+            if (strcmp(recibo, "f") == 0)
+            {
+                break;
             }
             puts("\n\n\n");
             printf("\n\tTURNO JUGADOR 4\n");

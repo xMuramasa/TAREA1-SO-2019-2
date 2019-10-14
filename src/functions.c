@@ -425,6 +425,7 @@ char *play(char *sourceDir, char *destDir)
     char *j = "j";
     char *d = "d";
     char *c = "c";
+    char *r = "r";
 
     // variables de input, tamaño de la mano, print cartas de mano jugador, print cartas drop
     int input, handSize, last, lastDrop, i;
@@ -471,7 +472,7 @@ char *play(char *sourceDir, char *destDir)
             printf("se ha seleccionado pasar\n");
             return n;
         }
-       
+
         //jugar
         else
         {
@@ -495,6 +496,7 @@ char *play(char *sourceDir, char *destDir)
                     printf("COLOR ESCOGIDO:\t%s\n", cardNames[input - 1]);
                     char color[50];
                     sprintf(color, "%s_%s_%s.txt", cardNames[input - 1], cardNames[input - 1], cardNames[input - 1]);
+                    myRemoveFile(buffer1, sourceDir);
                     myRemoveFile(buffer2, destDir);
                     moveFileToFolder(color, sourceDir, destDir);
                     return y;
@@ -509,6 +511,7 @@ char *play(char *sourceDir, char *destDir)
                     printf("COLOR ESCOGIDO:\t%s\n", cardNames[input - 1]);
                     char color[50];
                     sprintf(color, "%s_%s_%s.txt", cardNames[input - 1], cardNames[input - 1], cardNames[input - 1]);
+                    myRemoveFile(buffer1, sourceDir);
                     myRemoveFile(buffer2, destDir);
                     moveFileToFolder(color, sourceDir, destDir);
                     puts("");
@@ -529,6 +532,25 @@ char *play(char *sourceDir, char *destDir)
                     return j;
                 }
                 else{
+                    puts("");
+                    printf("CARTA ERRONEA\n");
+                }
+            }
+
+            //se jugo un reversa
+            else if (strcmp(cartaIn[1], "R") == 0)
+            {
+                if (strcmp(cartaOut[0], cartaIn[0]) == 0 || strcmp(cartaOut[1], "R") == 0)
+                {
+                    myRemoveFile(buffer2, destDir);
+                    sprintf(buffer1, "%s_%s_%s.txt", cartaIn[0], cartaIn[1], cartaIn[2]);
+                    moveFileToFolder(buffer1, sourceDir, destDir);
+                    puts("");
+                    printf("SE JUGO UN REVERSA\n");
+                    return r;
+                }
+                else
+                {
                     puts("");
                     printf("CARTA ERRONEA\n");
                 }
