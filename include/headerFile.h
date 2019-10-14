@@ -29,5 +29,6 @@ int cardInHand(char *sourceDir);
 char *play(char *sourceDir, char *destDir);
 
 void createGame();
+void drawDrop(char *sourceDir, char *destDir, int randNumber);
 
 #endif

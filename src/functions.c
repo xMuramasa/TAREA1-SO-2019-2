@@ -289,6 +289,40 @@ void drawX(char *sourceDir, char *destDir, int x)
     }
 }
 
+/* Void drawDrop function
+*   funcion : saca 1 cartas al azar y los mueve de carpeta Drop
+*   prints  : avisa si logra mover las cartas de posicion
+*   retorna : nada
+*/
+void drawDrop(char *sourceDir, char *destDir, int randNumber)
+{
+    int i = 0;
+    DIR *d;
+    char buffer[50];
+    char buffer2[50];
+    char buffer3[50];
+    char buffer4[50];
+    struct dirent *dir;
+    d = opendir(sourceDir);
+    if (d)
+    {
+        while ((dir = readdir(d)) != NULL && i < (randNumber))
+        {
+            if (strcmp(dir->d_name, ".") != 0 && strcmp(dir->d_name, "..") != 0)
+            {
+                strcpy(buffer, dir->d_name);
+                sscanf(buffer, "%[^_]_%s",buffer2,buffer3);
+                if(strcmp(buffer2, cardNames[4])!=0){
+                    strcpy(buffer4, buffer);
+                }
+                i++;
+            }
+        }
+        closedir(d);
+    }
+    moveFileToFolder(buffer4, sourceDir, destDir);
+}
+
 /* Void drawHand function
 *   funcion : saca 7 cartas al azar y los mueve de carpeta
 *   prints  : avisa si logra mover las cartas de posicion
@@ -574,6 +608,7 @@ char *play(char *sourceDir, char *destDir)
                 }
             }
 
+
             //se jugo un carta normal
             else if (strcmp(cartaIn[0], cartaOut[0]) == 0 || strcmp(cartaIn[1], cartaOut[1]) == 0)
             {
@@ -627,7 +662,7 @@ void createGame(){
     puts("");
 
     randomNumber = rand() % (108 - 2);
-    draw("../outfiles/Deck", "../outfiles/Drop", randomNumber);
+    drawDrop("../outfiles/Deck", "../outfiles/Drop", randomNumber);
     puts("");
     puts("Creación de carpetas de juego finalizada.");
 }
