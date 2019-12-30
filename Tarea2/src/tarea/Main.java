@@ -12,7 +12,7 @@ public class Main{
         Scanner input = new Scanner(System.in);
 
         System.out.println("Seleccione parte de la tarea a correr primero:");
-        System.out.println("[0] Parte 1\n[1] Parte 2");
+        System.out.println("[1] Parte 1\n[2] Parte 2");
         
         boolean flag = true;
         
@@ -22,12 +22,12 @@ public class Main{
 
         System.out.println("Ha seleccionado " + usrInput);
 
-        if(usrInput == 0){
+        if(usrInput == 1){
             p1.Parte_1();
             p2.Parte_2();
             flag = false;
         }
-        else if(usrInput == 1){
+        else if(usrInput == 2){
             p2.Parte_2();
             p1.Parte_1();
             flag = false;
