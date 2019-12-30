@@ -1,2 +1,6 @@
-Tarea2/src/build/classes/tarea/*.class
-Tarea2/src/build/jar/*.jar
+outfiles/*
+!outfiles/necesaryFile.xd
+src/obj/*
+src/out
+Tarea2/src/build/classes/tarea/*
+Tarea2/src/build/jar/*
