@@ -2,5 +2,4 @@ outfiles/*
 !outfiles/necesaryFile.xd
 src/obj/*
 src/out
-Tarea2/src/build/classes/tarea/*
-Tarea2/src/build/jar/*
+Tarea2/src/build/*
