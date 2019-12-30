@@ -1,7 +1,6 @@
 package tarea;
 
 public class Parte2{
-    String xd;
     public Parte2(){
 
     }
