@@ -18,11 +18,13 @@ class MyThread extends Thread{
 
     public int particion(List<Integer> array, int low, int high) {
 
-        int pivote = array.get(low);
+        int pivote = array.get(high);
         System.out.println("Pivot: " + pivote);
 
         int i = (low - 1);
-        int temp1,temp2;
+		int temp1,temp2;
+		
+		System.out.println("Array en PART ANTES: " + arr.toString());
         
 		
         for (int j = low; j < high; j++) {
@@ -40,6 +42,8 @@ class MyThread extends Thread{
         array.set(i+1, temp2);
         array.set(high, temp1);
 		
+		System.out.println("Array en PART DESP: " + arr.toString());
+
         return i + 1;
     }
     
@@ -116,6 +120,24 @@ public class Parte2 extends Thread{
 }
 
 // 15, 0, 28, 1, 78, 79, 365, 456, 752, 1024
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
  
 
 
