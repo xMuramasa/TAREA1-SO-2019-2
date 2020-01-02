@@ -8,23 +8,23 @@ import java.util.Scanner;
 class MyThread extends Thread{
 
     int low, high;
-    List<Integer> arr;
+    List<Long> arr;
 
-    public MyThread(List<Integer> S, int A, int D){
+    public MyThread(List<Long> S, int A, int D){
         this.arr =  S;
         this.low =  A;
         this.high = D;
     }
 
-    public int particion(List<Integer> array, int low, int high) {
+    public int particion(List<Long> array, int low, int high) {
 
-        int pivote = array.get(high);
+        Long pivote = array.get(high);
         System.out.println("Pivot: " + pivote);
 
         int i = (low - 1);
-		int temp1,temp2;
+		Long temp1,temp2;
 		
-		System.out.println("Array en PART ANTES: " + arr.toString());
+		//System.out.println("Array en PART ANTES: " + arr.toString());
         
 		
         for (int j = low; j < high; j++) {
@@ -42,7 +42,7 @@ class MyThread extends Thread{
         array.set(i+1, temp2);
         array.set(high, temp1);
 		
-		System.out.println("Array en PART DESP: " + arr.toString());
+		//System.out.println("Array en PART DESP: " + arr.toString());
 
         return i + 1;
     }
@@ -51,7 +51,7 @@ class MyThread extends Thread{
 		recursion(this.arr, this.low, this.high);
 	}
 
-	public void recursion(List<Integer> array, int low, int high) {
+	public void recursion(List<Long> array, int low, int high) {
 
 		if (low < high) {
 	
@@ -91,11 +91,11 @@ public class Parte2 extends Thread{
         
         int n = scan.nextInt();
 
-        List<Integer> arr = new ArrayList<Integer>();
+        List<Long> arr = new ArrayList<Long>();
         
         for(int i = 0; i < n; i++){
 			
-            arr.add(scan.nextInt());
+            arr.add(scan.nextLong());
 		}
 		
         System.out.println("Array Antes de ser ordenado: " + arr.toString());
@@ -118,8 +118,12 @@ public class Parte2 extends Thread{
 	}
 	
 }
+ 
 
-// 15, 0, 28, 1, 78, 79, 365, 456, 752, 1024
+
+ 
+
+
  
 
 

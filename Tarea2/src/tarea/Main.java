@@ -11,7 +11,7 @@ public class Main{
 
         Scanner input = new Scanner(System.in);
 
-        System.out.println("Seleccione parte de la tarea a correr primero:");
+        System.out.println("Seleccione parte de la tarea a correr:");
         System.out.println("[1] Parte 1\n[2] Parte 2");
         
         boolean flag = true;
@@ -24,12 +24,12 @@ public class Main{
 
         if(usrInput == 1){
             p1.Parte_1();
-            p2.Parte_2();
+            //p2.Parte_2();
             flag = false;
         }
         else if(usrInput == 2){
             p2.Parte_2();
-            p1.Parte_1();
+            //p1.Parte_1();
             flag = false;
         }
         else{
