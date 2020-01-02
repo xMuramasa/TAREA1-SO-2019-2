@@ -1,6 +1,5 @@
 ### TAREA2-SO-2019-2 ~2020~
 # Repositorio de la Tarea 2 de Sistemas Operativos
-# ENTREGA FINAL
 
 			(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ ✧ﾟ･: *ヽ(◕ヮ◕ヽ) (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ ✧ﾟ･: *ヽ(◕ヮ◕ヽ)
 
