@@ -4,17 +4,30 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/*
+Clase mythread, extiende la clase thread
+
+define una lista la cual contiene los elementos del arreglo a ordenar
+contiene el constructor de la clase y funciones necesarias para quicksort
+*/
 class MyThread extends Thread {
 
     int low, high;
     List<Long> arr;
 
+    // constructor de la clase
     public MyThread(List<Long> S, int A, int D) {
         this.arr = S;
         this.low = A;
         this.high = D;
     }
-
+    
+    /*
+    funcion: int particion
+    recibe una lista, un index de posicion inferior (low) y un index de posicion superior(high)
+    reordena los elementos de la lista comparandolos con un pivote, en este caso high
+    retorna la cantidad de elementos que movio en base al pivote
+    */
     public int particion(List<Long> array, int low, int high) {
 
         Long pivote = array.get(high);
@@ -44,11 +57,21 @@ class MyThread extends Thread {
 
         return i + 1;
     }
-
+    
+    /*
+    funcion void run 
+    comienza la ejecucion de los threads
+    */
     public void run() {
         recursion(this.arr, this.low, this.high);
     }
-
+    
+    /*
+    funcion void recursion
+    recibe la lista y los parametros de index low y high
+    hace una particion de la lista con la funcion
+    y crea 2 threads con las mitades de la lista para ordenarla
+    */
     public void recursion(List<Long> array, int low, int high) {
 
         if (low < high) {
@@ -76,6 +99,11 @@ class MyThread extends Thread {
 
     }
 }
+
+/*
+Clase parte2
+usa thread para llamar a las funciones de thread
+*/
 
 public class Parte2 extends Thread {
 
