@@ -1,5 +1,7 @@
 package tarea;
-
+/*
+xd
+*/
 
 public class Parte1{
     public Parte1(){
