@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args)  {
 
 		Parte1 p1 = new Parte1();
 		Parte2 p2 = new Parte2();
@@ -23,6 +23,13 @@ public class Main {
 			System.out.println("Ha seleccionado " + usrInput);
 
 			if (usrInput == 1) {
+				try{
+					p1.Parte_1();
+					// p2.Parte_2();
+					flag = false;
+				}catch(Exception e){
+					
+				}
 				p1.Parte_1();
 				// p2.Parte_2();
 				flag = false;

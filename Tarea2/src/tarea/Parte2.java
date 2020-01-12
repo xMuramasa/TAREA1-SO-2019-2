@@ -26,7 +26,7 @@ class MyThread extends Thread {
         // System.out.println("Array en PART ANTES: " + arr.toString());
 
         for (int j = low; j < high; j++) {
-            if (array.get(j) < pivote) {
+            if (array.get(j) > pivote) {
                 i++;
                 temp1 = array.get(i);
                 temp2 = array.get(j);
@@ -61,7 +61,6 @@ class MyThread extends Thread {
             try {
                 hijoI.join();
             } catch (Exception e) {
-                System.out.println("Me Cai hijo 1");
             }
 
             MyThread hijoD = new MyThread(this.arr, part + 1, this.high);
@@ -70,7 +69,6 @@ class MyThread extends Thread {
             try {
                 hijoD.join();
             } catch (Exception e) {
-                System.out.println("Me Cai hijo 2");
             }
         }
 
