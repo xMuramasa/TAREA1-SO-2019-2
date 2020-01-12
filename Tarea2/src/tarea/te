@@ -1,0 +1,11 @@
+scanner (s)
+
+a / b / c
+
+scanner.usedelim(*) 
+scanner.next() => a / b / c
+
+
+
+scanner.usedelim(/) 
+scanner.next() => a

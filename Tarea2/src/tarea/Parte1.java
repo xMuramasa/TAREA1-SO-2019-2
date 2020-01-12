@@ -41,75 +41,88 @@ public class Parte1 extends Thread{
         
     }
 
+    public void Parte_1() {
 
-    public void Parte_1(){
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        // codigoooooooooooooooooo
 
         System.out.println("funciono 1");
     }
 
-
-    public int operation(String operator, int a, int b){
-        int result = 0;
-
-        switch(operator){
-            case "+": 
-                result = a + b;
-                break;
-            case "-": 
-                result = a - b;
-                break;
-            case "/":
-                result = a / b;
-                break;
-            case "*":
-                result = a * b;
-                break;
-            default:
-                return 0;
-        }
-
-        return result;
-    }
     /**
-     * Open and read a file, and return the lines in the file as a list
-     * of Strings.
+     * Open and read a file, and return the lines in the file as a list of Strings.
      * (Demonstrates Java FileReader, BufferedReader, and Java5.)
      */
-    private List<String> readFile(String filename)
-    {
+    private List<String> readFile(String filename) {
         String line;
         BufferedReader reader = null;
         List<String> records = new ArrayList<String>();
-        try
-        {
+        try {
             reader = new BufferedReader(new FileReader(filename));
-            while ((line = reader.readLine()) != null)
-            {
-            records.add(line);
+            while ((line = reader.readLine()) != null) {
+                records.add(line);
             }
             reader.close();
             return records;
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.err.format("Exception occurred trying to read '%s'.", filename);
             e.printStackTrace();
             return null;
         }
     }
 }
+
+class MyThread2 extends Thread {
+  
+  private int res; 
+  private HashMap<String, String> map; 
+  private String ecuacion; 
+  private int value;
+  
+  // constructor de la clase ok 
+  public MyThread2(HashMap<String, String> M,String E, int val) { 
+      this.map = M; 
+      this.ecuacion = E; 
+      this.value = val; 
+    }
+  
+    // ok public 
+    int operation(String operator, int a, int b) { 
+        int result = 0;
+        switch (operator) {
+            case "+": 
+                result = a + b;
+                break; 
+            case "-": 
+                result = a -b; 
+                break; 
+            case "/": 
+                result = a / b;
+                break; 
+            case "*": 
+                result = a * b;
+                break;
+            default: 
+                return 0; 
+        }
+        return result; 
+    }
+  
+    public int parse(String ecuacion, int value){
+    
+        int res = 0; 
+        Scanner scanner = new Scanner(ecuacion); 
+        String buffer; int read;
+        
+    
+    
+    
+    
+    
+    
+    
+        return 0; 
+    }
+    
+    
+  }
+ 
