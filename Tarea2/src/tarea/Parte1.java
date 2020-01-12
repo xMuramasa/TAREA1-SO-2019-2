@@ -1,5 +1,4 @@
 package tarea;
-<<<<<<< HEAD
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -20,11 +19,6 @@ public class Parte1 extends Thread{
     String buffer2;
     Scanner scanner;
     
-=======
-/*
-xd
-*/
->>>>>>> 030fc5e761673ba1e48aef31107b9d850c8b4ba0
 
     public Parte1(){
         
