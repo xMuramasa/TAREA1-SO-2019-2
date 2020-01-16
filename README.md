@@ -18,16 +18,10 @@
 
 # Instrucciones de uso:
 	
-	** para correr el programa en una linea (make clean && make && make run)
-   #### Entrega 1:
-		* Para probar funciones, editar el archivo main.c
-		* Se compila usando make, dentro de la carpeta src (escribir en la consola: make)
-		luego, ejecutar usando el comando: make run.
-			*** Por consola se solicitará input indicando la parte de la tarea que se desea ejecutar
-				(Esta pensado para funcionar bien)
-			*** Despues de haber seleccionado una de las opciones, correra dicha eleccion, para posteriormente
-			    correr la opcion que no se indico una vez terminada  la ejecucion de la primera
-			    
+# Problema 1 no funciona:
+	- Pero la idea era separar las partes de las funciones en una tabla de hashing para luego acceder reemplazando los valores al hacer uso de threads, 
+	- se llamaba a la funcion parse recursivamente
+	- falto implementar la asociatividad y un aforma de separar los strings de una mejor manera
 	
 # Problema 2:
 	** Para resolver esta problema se uso un quicksort que usa threads, los threads se usan cuando se hace la particion y se llama a 	    la funcion quicksort.

@@ -30,9 +30,6 @@ public class Main {
 				}catch(Exception e){
 					
 				}
-				p1.Parte_1();
-				// p2.Parte_2();
-				flag = false;
 				
 			} else if (usrInput == 2) {
 				p2.Parte_2();
